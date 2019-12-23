@@ -44,7 +44,10 @@ void Light_Initialize(void)
 	pDevice->SetLight(0, &g_aLight[0]);
 
 	// ライトを有効に
-	pDevice->LightEnable(0, TRUE);
+	pDevice->LightEnable(0,TRUE);//ここが全体の光
+
+
+
 
 
 	// D3DLIGHT9構造体を0でクリアする
@@ -90,7 +93,7 @@ void Light_Initialize(void)
 	pDevice->SetLight(2, &g_aLight[2]);
 
 	// ライト2を有効に
-	pDevice->LightEnable(2, TRUE);
+	pDevice->LightEnable(2, FALSE);
 
 
 	// ライティングモード有効

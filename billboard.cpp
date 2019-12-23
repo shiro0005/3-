@@ -123,6 +123,7 @@ void Billboard_Update(void)
 		}
 	}
 
+	//プロパティ　C＋＋　言語　準拠モード　いいえ　設定必須
 	DebugProc_Print("*** ボール操作 ***\n");
 	DebugProc_Print("[ボールの位置  ：(%f : %f : %f)]\n", g_posBillboard.x, g_posBillboard.y, g_posBillboard.z);
 	DebugProc_Print("[ボールの移動量：(%f : %f : %f)]\n", g_moveBillboard.x, g_moveBillboard.y, g_moveBillboard.z);

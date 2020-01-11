@@ -12,6 +12,7 @@
 #include "billboard.h"
 #include "shadow.h"
 #include "bullet.h"
+#include "box.h"
 #include "enemy.h"
 #include "collision.h"
 #include <time.h>
@@ -246,6 +247,9 @@ bool Initialize(HINSTANCE hInst)
 	// 地面の初期化処理
 	Field_Initialize();
 
+	//box
+	box_Initialize();
+
 	//影の初期化
 	Shadow_Initialize();//使用する処理より先に初期化しないとダメ
 
@@ -279,6 +283,9 @@ void Finalize(void)
 
 	// 地面の終了処理
 	Field_Finalize();
+
+	//box
+	box_Finalize();
 
 	//グリッドの終了処理
 //	Grid_Finalize();
@@ -330,6 +337,9 @@ void Update(void)
 	// 地面の更新処理
 	Field_Update();
 
+	//box
+	box_Update();
+
 	//グリッドの更新処理
 //	Grid_Update();
 
@@ -370,6 +380,9 @@ void Draw(void)
 
 	// 地面の描画処理
 	Field_Draw();
+
+	//box
+	box_Draw();
 
 	//グリッドの描画処理
 //	Grid_Draw();

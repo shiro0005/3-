@@ -108,139 +108,139 @@ void Field_Finalize(void)
 //=============================================================================
 void Field_Update(void)
 {
-	FrameCnt++;
+	//FrameCnt++;
 
-	D3DXMATRIX mtxScl, mtxRot, mtxTranslate;
-	//ワールドマトリックスの初期化
-	for (int i = 0; i < NUM_BOX; i++) {
-		D3DXMatrixIdentity(&g_Box[i].g_mtxWorldField);
-	}
-	if (FrameCnt >= 10) {
+	//D3DXMATRIX mtxScl, mtxRot, mtxTranslate;
+	////ワールドマトリックスの初期化
+	//for (int i = 0; i < NUM_BOX; i++) {
+	//	D3DXMatrixIdentity(&g_Box[i].g_mtxWorldField);
+	//}
+	//if (FrameCnt >= 10) {
 
-		VERTEX_3D *pVtx;
-		//頂点データの範囲をロックし、頂点バッファへのポインタを取得
-		g_pVtxBuffField->Lock(0, 0, (void**)&pVtx, 0);
-
-
-		zcnt[5] ++;//カウント
-		if (zcnt[5] >= 20) {
-			zcnt[5] = 0;//初期化
-		}
-
-		//波生成
-		for (int x = 0; x < BLOCK_X + 1; x++) {
-
-			//初期化用
-			for (int i = 0; i < 5; i++) {
-				if (i == 4 && zcnt[5] >= 17) {
-					break;
-				}
-
-				//前後ひとつ前のフレームで高くしていたところを低く
-				if (zcnt[5] == 0) {
-					pVtx[zcnt[i] + 20 * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 0.0f, BLOCK_Y*-100.0f);
-				}
-				else {
-					pVtx[((zcnt[i] + zcnt[5]) - 1) * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 0.0f, ((zcnt[i] + zcnt[5]) - 1)*-100.0f);
-				}
+	//	VERTEX_3D *pVtx;
+	//	//頂点データの範囲をロックし、頂点バッファへのポインタを取得
+	//	g_pVtxBuffField->Lock(0, 0, (void**)&pVtx, 0);
 
 
-				////左右ひとつ前のフレームで高くしていたところを低く
-				//if (zcnt[5] == 0) {
-				//	pVtx[x * (BLOCK_X + 1) + zcnt[i] + 20].pos = D3DXVECTOR3((zcnt[i] + 20)*100.0f, 0.0f, x * -100.0f);
-				//}
-				//else {
-				//	pVtx[x * (BLOCK_X + 1) + ((zcnt[i] + zcnt[5]) - 1)].pos = D3DXVECTOR3((zcnt[i] + zcnt[5] - 1) * 100.0f, 0.0f, x *-100.0f);
-				//}
-			}
+	//	zcnt[5] ++;//カウント
+	//	if (zcnt[5] >= 20) {
+	//		zcnt[5] = 0;//初期化
+	//	}
+
+	//	//波生成
+	//	for (int x = 0; x < BLOCK_X + 1; x++) {
+
+	//		//初期化用
+	//		for (int i = 0; i < 5; i++) {
+	//			if (i == 4 && zcnt[5] >= 17) {
+	//				break;
+	//			}
+
+	//			//前後ひとつ前のフレームで高くしていたところを低く
+	//			if (zcnt[5] == 0) {
+	//				pVtx[zcnt[i] + 20 * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 0.0f, BLOCK_Y*-100.0f);
+	//			}
+	//			else {
+	//				pVtx[((zcnt[i] + zcnt[5]) - 1) * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 0.0f, ((zcnt[i] + zcnt[5]) - 1)*-100.0f);
+	//			}
 
 
-			//前後の波
-			for (int i = 0; i < 5; i++) {
-				
-				if (i == 4 && zcnt[5] >= 17) {
-					break;//ここにブレイクがあるので二つに分けた
-				}
-				//横一列高くする
-				pVtx[(zcnt[i] + zcnt[5]) * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 80.0f, (zcnt[i] + zcnt[5]) * -100.0f);
-
-				//横一列高くする
-				//pVtx[(zcnt[i] + zcnt[5]+1) * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 80.0f, (zcnt[i] + zcnt[5]) * -100.0f);
-
-			}
-            
-			////左右の波
-			//for (int i = 0; i < 5; i++) {
-			//	
-			//	if (i == 4 && zcnt[5] >= 17) {
-			//		break;
-			//	}
-			//	//縦一列高く
-			//	pVtx[x  * (BLOCK_X + 1) + zcnt[i] + zcnt[5]].pos = D3DXVECTOR3((zcnt[i] + zcnt[5]) *100.0f, 80.0f, x * -100.0f);
-			//}
-		}
+	//			////左右ひとつ前のフレームで高くしていたところを低く
+	//			//if (zcnt[5] == 0) {
+	//			//	pVtx[x * (BLOCK_X + 1) + zcnt[i] + 20].pos = D3DXVECTOR3((zcnt[i] + 20)*100.0f, 0.0f, x * -100.0f);
+	//			//}
+	//			//else {
+	//			//	pVtx[x * (BLOCK_X + 1) + ((zcnt[i] + zcnt[5]) - 1)].pos = D3DXVECTOR3((zcnt[i] + zcnt[5] - 1) * 100.0f, 0.0f, x *-100.0f);
+	//			//}
+	//		}
 
 
-		FrameCnt = 0;
+	//		//前後の波
+	//		for (int i = 0; i < 5; i++) {
+	//			
+	//			if (i == 4 && zcnt[5] >= 17) {
+	//				break;//ここにブレイクがあるので二つに分けた
+	//			}
+	//			//横一列高くする
+	//			pVtx[(zcnt[i] + zcnt[5]) * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 80.0f, (zcnt[i] + zcnt[5]) * -100.0f);
 
-		//頂点データをアンロックする
-		g_pVtxBuffField->Unlock();
-	}
+	//			//横一列高くする
+	//			//pVtx[(zcnt[i] + zcnt[5]+1) * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 80.0f, (zcnt[i] + zcnt[5]) * -100.0f);
+
+	//		}
+ //           
+	//		////左右の波
+	//		//for (int i = 0; i < 5; i++) {
+	//		//	
+	//		//	if (i == 4 && zcnt[5] >= 17) {
+	//		//		break;
+	//		//	}
+	//		//	//縦一列高く
+	//		//	pVtx[x  * (BLOCK_X + 1) + zcnt[i] + zcnt[5]].pos = D3DXVECTOR3((zcnt[i] + zcnt[5]) *100.0f, 80.0f, x * -100.0f);
+	//		//}
+	//	}
+
+
+	//	FrameCnt = 0;
+
+	//	//頂点データをアンロックする
+	//	g_pVtxBuffField->Unlock();
+	//}
 
 
 
 
-	//0番//
+	////0番//
 
-	g_Box[0].g_rot1Field.y += 0.01f;
-	//回転を反映
-	//Yaw：Y軸回転　Pitch : X軸回転　Roll : Z軸回転  Pitchが９０度になりRollができなくなる：ジンバルロック
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Box[0].g_rot1Field.y, g_Box[0].g_rot1Field.x, g_Box[0].g_rot1Field.z);
-	D3DXMatrixMultiply(&g_Box[0].g_mtxWorldField, &g_Box[0].g_mtxWorldField, &mtxRot);
-
-	g_Box[0].g_posField.x = 100.0f;
-	g_Box[0].g_posField.y = 100.0f;
-	g_Box[0].g_posField.z = 100.0f;
-
-	//移動を反映
-	D3DXMatrixTranslation(&mtxTranslate, g_Box[0].g_posField.x, g_Box[0].g_posField.y, g_Box[0].g_posField.z);
-	D3DXMatrixMultiply(&g_Box[0].g_mtxWorldField, &g_Box[0].g_mtxWorldField, &mtxTranslate);
-
-
-	//1番//
-
-	//g_Box[1].g_rot1Field.y -= 0.03f;
+	//g_Box[0].g_rot1Field.y += 0.01f;
 	////回転を反映
 	////Yaw：Y軸回転　Pitch : X軸回転　Roll : Z軸回転  Pitchが９０度になりRollができなくなる：ジンバルロック
-	//D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Box[1].g_rot1Field.y, g_Box[1].g_rot1Field.x, g_Box[1].g_rot1Field.z);
-	//D3DXMatrixMultiply(&g_Box[1].g_mtxWorldField, &g_Box[1].g_mtxWorldField, &mtxRot);
+	//D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Box[0].g_rot1Field.y, g_Box[0].g_rot1Field.x, g_Box[0].g_rot1Field.z);
+	//D3DXMatrixMultiply(&g_Box[0].g_mtxWorldField, &g_Box[0].g_mtxWorldField, &mtxRot);
 
-	g_Box[1].g_posField.x = 200.0f;
-	g_Box[1].g_posField.z = 200.0f;
-
-	//移動を反映
-	D3DXMatrixTranslation(&mtxTranslate, g_Box[1].g_posField.x, g_Box[1].g_posField.y, g_Box[1].g_posField.z);
-	D3DXMatrixMultiply(&g_Box[1].g_mtxWorldField, &g_Box[1].g_mtxWorldField, &mtxTranslate);
-
-	//g_Box[1].g_rot2Field.y += 0.03f;
-	////打消し回転を反映
-	////Yaw：Y軸回転　Pitch : X軸回転　Roll : Z軸回転  Pitchが９０度になりRollができなくなる：ジンバルロック
-	//D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Box[1].g_rot2Field.y, g_Box[1].g_rot2Field.x, g_Box[1].g_rot2Field.z);
-	//D3DXMatrixMultiply(&g_Box[1].g_mtxWorldField, &g_Box[1].g_mtxWorldField, &mtxRot);
-
-	//子供＊親 1個目の引数に２と３の引数をかけて代入
-	D3DXMatrixMultiply(&g_Box[1].g_mtxWorldField, &g_Box[1].g_mtxWorldField, &g_Box[0].g_mtxWorldField);
-
-
-	//D3DXVECTOR3 pos;
-
-	//pos.x = 100.0f;
-	//pos.y = 100.0f;
-	//pos.z = 100.0f;
+	//g_Box[0].g_posField.x = 100.0f;
+	//g_Box[0].g_posField.y = 100.0f;
+	//g_Box[0].g_posField.z = 100.0f;
 
 	////移動を反映
-	//D3DXMatrixTranslation(&mtxTranslate,pos.x,pos.y, pos.z);
+	//D3DXMatrixTranslation(&mtxTranslate, g_Box[0].g_posField.x, g_Box[0].g_posField.y, g_Box[0].g_posField.z);
+	//D3DXMatrixMultiply(&g_Box[0].g_mtxWorldField, &g_Box[0].g_mtxWorldField, &mtxTranslate);
+
+
+	////1番//
+
+	////g_Box[1].g_rot1Field.y -= 0.03f;
+	//////回転を反映
+	//////Yaw：Y軸回転　Pitch : X軸回転　Roll : Z軸回転  Pitchが９０度になりRollができなくなる：ジンバルロック
+	////D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Box[1].g_rot1Field.y, g_Box[1].g_rot1Field.x, g_Box[1].g_rot1Field.z);
+	////D3DXMatrixMultiply(&g_Box[1].g_mtxWorldField, &g_Box[1].g_mtxWorldField, &mtxRot);
+
+	//g_Box[1].g_posField.x = 200.0f;
+	//g_Box[1].g_posField.z = 200.0f;
+
+	////移動を反映
+	//D3DXMatrixTranslation(&mtxTranslate, g_Box[1].g_posField.x, g_Box[1].g_posField.y, g_Box[1].g_posField.z);
 	//D3DXMatrixMultiply(&g_Box[1].g_mtxWorldField, &g_Box[1].g_mtxWorldField, &mtxTranslate);
+
+	////g_Box[1].g_rot2Field.y += 0.03f;
+	//////打消し回転を反映
+	//////Yaw：Y軸回転　Pitch : X軸回転　Roll : Z軸回転  Pitchが９０度になりRollができなくなる：ジンバルロック
+	////D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Box[1].g_rot2Field.y, g_Box[1].g_rot2Field.x, g_Box[1].g_rot2Field.z);
+	////D3DXMatrixMultiply(&g_Box[1].g_mtxWorldField, &g_Box[1].g_mtxWorldField, &mtxRot);
+
+	////子供＊親 1個目の引数に２と３の引数をかけて代入
+	//D3DXMatrixMultiply(&g_Box[1].g_mtxWorldField, &g_Box[1].g_mtxWorldField, &g_Box[0].g_mtxWorldField);
+
+
+	////D3DXVECTOR3 pos;
+
+	////pos.x = 100.0f;
+	////pos.y = 100.0f;
+	////pos.z = 100.0f;
+
+	//////移動を反映
+	////D3DXMatrixTranslation(&mtxTranslate,pos.x,pos.y, pos.z);
+	////D3DXMatrixMultiply(&g_Box[1].g_mtxWorldField, &g_Box[1].g_mtxWorldField, &mtxTranslate);
 
 }
 

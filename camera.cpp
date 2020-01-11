@@ -10,7 +10,7 @@
 #define	CAM_POS_V_Y		(500.0f)				// カメラの視点初期位置(Y座標)
 #define	CAM_POS_V_Z		(-2200.0f)				// カメラの視点初期位置(Z座標)
 #define	CAM_POS_R_X		(1500.0f)					// カメラの注視点初期位置(X座標)
-#define	CAM_POS_R_Y		(0.0f)					// カメラの注視点初期位置(Y座標)
+#define	CAM_POS_R_Y		(-500.0f)					// カメラの注視点初期位置(Y座標)
 #define	CAM_POS_R_Z		(0.0f)					// カメラの注視点初期位置(Z座標)
 #define	VIEW_ANGLE		(D3DXToRadian(45.0f))							// ビュー平面の視野角
 #define	VIEW_ASPECT		((float)SCREEN_WIDTH / (float)SCREEN_HEIGHT)	// ビュー平面のアスペクト比

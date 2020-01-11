@@ -53,7 +53,7 @@ HRESULT box_Initialize(void)
 
 	// 位置・回転・スケールの初期設定
 	for (int i = 0; i < NUM_BOX; i++) {
-		g_Box[i].g_posbox = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Box[i].g_posbox = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
 		g_Box[i].g_rot1box = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Box[i].g_rot2box = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Box[i].g_sclbox = D3DXVECTOR3(1.0f, 1.0f, 1.0f);

@@ -39,7 +39,7 @@ typedef struct {
 	D3DXVECTOR3				g_sclField;				// 地面の大きさ(スケール)
 }BOX_T;
 
-BOX_T g_Box[NUM_BOX];
+BOX_T g_Field[NUM_BOX];
 
 int g_NumVertex = (BLOCK_X + 1)*(BLOCK_Y + 1);                //頂点数
 int g_NumIndex = ((BLOCK_X + 1)*BLOCK_Y + (BLOCK_Y - 1)) * 2; //インデックス数 ((BLOCK_X + 1)*2)*BLOCK_Y+(BLOCK_Y-1)*2
@@ -76,10 +76,10 @@ HRESULT Field_Initialize(void)
 
 	// 位置・回転・スケールの初期設定
 	for (int i = 0; i < NUM_BOX; i++) {
-		g_Box[i].g_posField = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_Box[i].g_rot1Field = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_Box[i].g_rot2Field = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_Box[i].g_sclField = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+		g_Field[i].g_posField = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Field[i].g_rot1Field = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Field[i].g_rot2Field = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_Field[i].g_sclField = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	}
 	return S_OK;
 }

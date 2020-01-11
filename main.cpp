@@ -285,7 +285,7 @@ void Finalize(void)
 	Field_Finalize();
 
 	//box
-	box_Finalize();
+	//box_Finalize();
 
 	//グリッドの終了処理
 //	Grid_Finalize();

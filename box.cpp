@@ -58,6 +58,8 @@ HRESULT box_Initialize(void)
 		g_Box[i].g_rot2box = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Box[i].g_sclbox = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	}
+
+
 	return S_OK;
 }
 

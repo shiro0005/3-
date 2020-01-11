@@ -3,6 +3,7 @@
 #include "myDirect3D.h"
 #include "input.h"
 #include "texture.h"
+#include "box.h"
 #include "debugproc.h"
 
 //*****************************************************************************
@@ -282,6 +283,7 @@ void Field_Draw(void)
 		//pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
 
 	}
+
 }
 
 //=============================================================================

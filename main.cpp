@@ -385,7 +385,7 @@ void Draw(void)
 	box_Draw();
 
 	//ƒOƒŠƒbƒh‚Ì•`‰æˆ—
-//	Grid_Draw();
+    //Grid_Draw();
 
 	//
 	Shadow_Draw();

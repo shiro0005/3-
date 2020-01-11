@@ -12,9 +12,9 @@
 #define	VALUE_MOVE		(5.0f)							// 移動量
 #define	VALUE_ROTATE	(D3DX_PI * 0.01f)				// 回転量
 
-#define	BOX_WIDTH		(100.0f)						// 地面の幅(X方向)
-#define	BOX_DEPTH		(100.0f)						// 地面の奥行(Z方向)
-#define BOX_HIGHT     (100.0f)                        //地面の高さ(Y方向)
+#define	BOX_WIDTH		(50.0f)						// 地面の幅(X方向)
+#define	BOX_DEPTH		(50.0f)						// 地面の奥行(Z方向)
+#define BOX_HIGHT     (50.0f)                        //地面の高さ(Y方向)
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -27,7 +27,7 @@ HRESULT MakeVertexbox(LPDIRECT3DDEVICE9 pDevice);
 static LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffbox = NULL;	// 頂点バッファへのポインタ
 static LPDIRECT3DINDEXBUFFER9 g_pIdxBuffbox = NULL;
 
-#define NUM_BOX 2
+#define NUM_BOX 1
 
 typedef struct {
 	D3DXMATRIX				g_mtxWorldbox;		// ワールドマトリックス
@@ -255,19 +255,19 @@ void box_Update(void)
 
 	//0番//
 
-	g_Box[0].g_rot1box.y += 0.01f;
+	//g_Box[0].g_rot1box.y += 0.01f;
 	//回転を反映
 	//Yaw：Y軸回転　Pitch : X軸回転　Roll : Z軸回転  Pitchが９０度になりRollができなくなる：ジンバルロック
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Box[0].g_rot1box.y, g_Box[0].g_rot1box.x, g_Box[0].g_rot1box.z);
+	/*D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Box[0].g_rot1box.y, g_Box[0].g_rot1box.x, g_Box[0].g_rot1box.z);
 	D3DXMatrixMultiply(&g_Box[0].g_mtxWorldbox, &g_Box[0].g_mtxWorldbox, &mtxRot);
 
 	g_Box[0].g_posbox.x = 100.0f;
 	g_Box[0].g_posbox.y = 100.0f;
-	g_Box[0].g_posbox.z = 100.0f;
+	g_Box[0].g_posbox.z = 100.0f;*/
 
 	//移動を反映
-	D3DXMatrixTranslation(&mtxTranslate, g_Box[0].g_posbox.x, g_Box[0].g_posbox.y, g_Box[0].g_posbox.z);
-	D3DXMatrixMultiply(&g_Box[0].g_mtxWorldbox, &g_Box[0].g_mtxWorldbox, &mtxTranslate);
+	/*D3DXMatrixTranslation(&mtxTranslate, g_Box[0].g_posbox.x, g_Box[0].g_posbox.y, g_Box[0].g_posbox.z);
+	D3DXMatrixMultiply(&g_Box[0].g_mtxWorldbox, &g_Box[0].g_mtxWorldbox, &mtxTranslate);*/
 
 
 	//1番//
@@ -278,12 +278,12 @@ void box_Update(void)
 	//D3DXMatrixRotationYawPitchRoll(&mtxRot, g_Box[1].g_rot1box.y, g_Box[1].g_rot1box.x, g_Box[1].g_rot1box.z);
 	//D3DXMatrixMultiply(&g_Box[1].g_mtxWorldbox, &g_Box[1].g_mtxWorldbox, &mtxRot);
 
-	g_Box[1].g_posbox.x = 200.0f;
-	g_Box[1].g_posbox.z = 200.0f;
+	/*g_Box[1].g_posbox.x = 200.0f;
+	g_Box[1].g_posbox.z = 200.0f;*/
 
 	//移動を反映
-	D3DXMatrixTranslation(&mtxTranslate, g_Box[1].g_posbox.x, g_Box[1].g_posbox.y, g_Box[1].g_posbox.z);
-	D3DXMatrixMultiply(&g_Box[1].g_mtxWorldbox, &g_Box[1].g_mtxWorldbox, &mtxTranslate);
+	/*D3DXMatrixTranslation(&mtxTranslate, g_Box[1].g_posbox.x, g_Box[1].g_posbox.y, g_Box[1].g_posbox.z);
+	D3DXMatrixMultiply(&g_Box[1].g_mtxWorldbox, &g_Box[1].g_mtxWorldbox, &mtxTranslate);*/
 
 	//g_Box[1].g_rot2box.y += 0.03f;
 	////打消し回転を反映
@@ -292,7 +292,7 @@ void box_Update(void)
 	//D3DXMatrixMultiply(&g_Box[1].g_mtxWorldbox, &g_Box[1].g_mtxWorldbox, &mtxRot);
 
 	//子供＊親
-	D3DXMatrixMultiply(&g_Box[1].g_mtxWorldbox, &g_Box[1].g_mtxWorldbox, &g_Box[0].g_mtxWorldbox);
+	//D3DXMatrixMultiply(&g_Box[1].g_mtxWorldbox, &g_Box[1].g_mtxWorldbox, &g_Box[0].g_mtxWorldbox);
 
 
 	//D3DXVECTOR3 pos;

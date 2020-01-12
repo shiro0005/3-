@@ -44,12 +44,330 @@ int g_NumIndexbox = 36;
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT box_Initialize(void)
+HRESULT box_Initialize(float x, float z)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+	LPDIRECT3DDEVICE9 pDevicebox = GetD3DDevice();
 
 	// 頂点情報の作成
-	MakeVertexbox(pDevice);
+	//MakeVertexbox(pDevice);
+	if (FAILED(pDevicebox->CreateVertexBuffer(sizeof(VERTEX_3D) * NUM_VERTEX,
+		D3DUSAGE_WRITEONLY, FVF_VERTEX_3D, D3DPOOL_MANAGED, &g_pVtxBuffbox, NULL)))
+	{
+		return E_FAIL;
+	}
+
+	{//頂点バッファの中身を埋める
+		VERTEX_3D *pVtx;
+
+		//頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		g_pVtxBuffbox->Lock(0, 0, (void**)&pVtx, 0);
+
+		//頂点座標の設定
+		pVtx[0].pos = D3DXVECTOR3(x, 100.0f, z);//左上手前
+		pVtx[1].pos = D3DXVECTOR3(x + 100.0f, 100.0f, z);//右上
+		pVtx[2].pos = D3DXVECTOR3(x, 0.0f, z);//左下
+		pVtx[3].pos = D3DXVECTOR3(x + 100.0f, 0.0f, z);//右下
+
+		pVtx[4].pos = D3DXVECTOR3(x, 100.0f, z + 100.0f);//左上奥
+		pVtx[5].pos = D3DXVECTOR3(x + 100.0f, 100.0f, z + 100.0f);//右上
+		pVtx[6].pos = D3DXVECTOR3(x, 0.0f, z + 100.0f);//左下
+		pVtx[7].pos = D3DXVECTOR3(x + 100.0f, 0.0f, z + 100.0f);//右下
+
+		//pVtx[8].pos = D3DXVECTOR3(-box_WIDTH, -box_HIGHT, -box_DEPTH);
+		//pVtx[9].pos = D3DXVECTOR3(box_WIDTH, box_HIGHT, -box_DEPTH);
+		//pVtx[10].pos = D3DXVECTOR3(box_WIDTH, -box_HIGHT, -box_DEPTH);
+		//pVtx[11].pos = D3DXVECTOR3(-box_WIDTH, -box_HIGHT, -box_DEPTH);
+		//pVtx[12].pos = D3DXVECTOR3(box_WIDTH, box_HIGHT, -box_DEPTH);//右
+		//pVtx[13].pos = D3DXVECTOR3(box_WIDTH, box_HIGHT, box_DEPTH);
+		//pVtx[14].pos = D3DXVECTOR3(box_WIDTH, -box_HIGHT, -box_DEPTH);
+		//pVtx[15].pos = D3DXVECTOR3(box_WIDTH, box_HIGHT, box_DEPTH);
+		//pVtx[16].pos = D3DXVECTOR3(box_WIDTH, -box_HIGHT, box_DEPTH);
+		//pVtx[17].pos = D3DXVECTOR3(box_WIDTH, -box_HIGHT, -box_DEPTH);
+		//pVtx[18].pos = D3DXVECTOR3(box_WIDTH, -box_HIGHT, -box_DEPTH);//下
+		//pVtx[19].pos = D3DXVECTOR3(box_WIDTH, -box_HIGHT, box_DEPTH);
+		//pVtx[20].pos = D3DXVECTOR3(-box_WIDTH, -box_HIGHT, -box_DEPTH);
+		//pVtx[21].pos = D3DXVECTOR3(box_WIDTH, -box_HIGHT, box_DEPTH);
+		//pVtx[22].pos = D3DXVECTOR3(-box_WIDTH, -box_HIGHT, box_DEPTH);
+		//pVtx[23].pos = D3DXVECTOR3(-box_WIDTH, -box_HIGHT, -box_DEPTH);
+		//pVtx[24].pos = D3DXVECTOR3(-box_WIDTH, box_HIGHT, box_DEPTH);//左
+		//pVtx[25].pos = D3DXVECTOR3(-box_WIDTH, box_HIGHT, -box_DEPTH);
+		//pVtx[26].pos = D3DXVECTOR3(-box_WIDTH, -box_HIGHT, box_DEPTH);
+		//pVtx[27].pos = D3DXVECTOR3(-box_WIDTH, box_HIGHT, -box_DEPTH);
+		//pVtx[28].pos = D3DXVECTOR3(-box_WIDTH, -box_HIGHT, -box_DEPTH);
+		//pVtx[29].pos = D3DXVECTOR3(-box_WIDTH, -box_HIGHT, box_DEPTH);
+		//pVtx[30].pos = D3DXVECTOR3(box_WIDTH, -box_HIGHT, box_DEPTH);//後ろ
+		//pVtx[31].pos = D3DXVECTOR3(box_WIDTH, box_HIGHT, box_DEPTH);
+		//pVtx[32].pos = D3DXVECTOR3(-box_WIDTH, -box_HIGHT, box_DEPTH);
+		//pVtx[33].pos = D3DXVECTOR3(box_WIDTH, box_HIGHT, box_DEPTH);
+		//pVtx[34].pos = D3DXVECTOR3(-box_WIDTH, box_HIGHT, box_DEPTH);
+		//pVtx[35].pos = D3DXVECTOR3(-box_WIDTH, -box_HIGHT, box_DEPTH);
+
+		//法線ベクトルの設定
+		pVtx[0].nor = D3DXVECTOR3(-1.0f, 1.0f, -1.0f);
+		pVtx[1].nor = D3DXVECTOR3(1.0f, 1.0f, -1.0f);
+		pVtx[2].nor = D3DXVECTOR3(-1.0f, -1.0f, -1.0f);
+		pVtx[3].nor = D3DXVECTOR3(1.0f, -1.0f, -1.0f);
+
+		pVtx[4].nor = D3DXVECTOR3(-1.0f, 1.0f, 1.0f);
+		pVtx[5].nor = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+		pVtx[6].nor = D3DXVECTOR3(-1.0f, -1.0f, 1.0f);
+		pVtx[7].nor = D3DXVECTOR3(1.0f, -1.0f, 1.0f);
+		/*pVtx[8].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+		pVtx[9].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+		pVtx[10].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+		pVtx[11].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+
+		pVtx[12].nor = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+		pVtx[13].nor = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+		pVtx[14].nor = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+		pVtx[15].nor = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+		pVtx[16].nor = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+		pVtx[17].nor = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+
+		pVtx[18].nor = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+		pVtx[19].nor = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+		pVtx[20].nor = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+		pVtx[21].nor = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+		pVtx[22].nor = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+		pVtx[23].nor = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+
+		pVtx[24].nor = D3DXVECTOR3(-1.0f, 0.0f, 0.0f);
+		pVtx[25].nor = D3DXVECTOR3(-1.0f, 0.0f, 0.0f);
+		pVtx[26].nor = D3DXVECTOR3(-1.0f, 0.0f, 0.0f);
+		pVtx[27].nor = D3DXVECTOR3(-1.0f, 0.0f, 0.0f);
+		pVtx[28].nor = D3DXVECTOR3(-1.0f, 0.0f, 0.0f);
+		pVtx[29].nor = D3DXVECTOR3(-1.0f, 0.0f, 0.0f);
+
+		pVtx[30].nor = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+		pVtx[31].nor = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+		pVtx[32].nor = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+		pVtx[33].nor = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+		pVtx[34].nor = D3DXVECTOR3(0.0f, 0.0f, 1.0f);
+		pVtx[35].nor = D3DXVECTOR3(0.0f, 0.0f, 1.0f);*/
+
+		//頂点カラーの設定
+		pVtx[0].col_cir = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[1].col_cir = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[2].col_cir = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[3].col_cir = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[4].col_cir = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[5].col_cir = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[6].col_cir = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[7].col_cir = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		/*pVtx[8].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[9].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[10].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[11].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+		pVtx[12].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[13].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[14].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[15].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[16].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[17].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+		pVtx[18].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[19].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[20].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[21].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[22].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[23].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+		pVtx[24].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[25].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[26].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[27].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[28].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[29].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+		pVtx[30].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[31].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[32].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[33].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[34].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[35].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);*/
+
+
+		//UV値設定
+		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+		pVtx[4].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[5].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[6].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[7].tex = D3DXVECTOR2(1.0f, 1.0f);
+		/*pVtx[8].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[9].tex = D3DXVECTOR2(1.0f, 1.0f);
+		pVtx[10].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[11].tex = D3DXVECTOR2(0.0f, 0.0f);
+
+		pVtx[12].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[13].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[14].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[15].tex = D3DXVECTOR2(1.0f, 1.0f);
+		pVtx[16].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[17].tex = D3DXVECTOR2(0.0f, 0.0f);
+
+		pVtx[18].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[19].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[20].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[21].tex = D3DXVECTOR2(1.0f, 1.0f);
+		pVtx[22].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[23].tex = D3DXVECTOR2(0.0f, 0.0f);
+
+		pVtx[24].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[25].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[26].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[27].tex = D3DXVECTOR2(1.0f, 1.0f);
+		pVtx[28].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[29].tex = D3DXVECTOR2(0.0f, 0.0f);
+
+		pVtx[30].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[31].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[32].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[33].tex = D3DXVECTOR2(1.0f, 1.0f);
+		pVtx[34].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[35].tex = D3DXVECTOR2(0.0f, 0.0f);*/
+
+		//頂点データをアンロックする
+		g_pVtxBuffbox->Unlock();
+	}
+	if (FAILED(pDevicebox->CreateIndexBuffer(sizeof(WORD)*g_NumIndexbox,
+		D3DUSAGE_WRITEONLY,
+		D3DFMT_INDEX16,
+		D3DPOOL_MANAGED,
+		&g_pIdxBuffbox,
+		NULL))) {
+		return E_FAIL;
+	}
+
+	{//インデックスバッファの中身を埋める
+		WORD *pIdx;
+
+		g_pIdxBuffbox->Lock(0, 0, (void**)&pIdx, 0);
+
+		pIdx[0] = 0;//前
+		pIdx[1] = 1;
+		pIdx[2] = 2;
+		pIdx[3] = 1;
+		pIdx[4] = 3;
+		pIdx[5] = 2;
+
+		pIdx[6] = 1;//右
+		pIdx[7] = 5;
+		pIdx[8] = 3;
+		pIdx[9] = 5;
+		pIdx[10] = 7;
+		pIdx[11] = 3;
+
+		pIdx[12] = 4;//上
+		pIdx[13] = 5;
+		pIdx[14] = 0;
+		pIdx[15] = 5;
+		pIdx[16] = 1;
+		pIdx[17] = 0;
+
+		pIdx[18] = 4;//左
+		pIdx[19] = 0;
+		pIdx[20] = 6;
+		pIdx[21] = 0;
+		pIdx[22] = 2;
+		pIdx[23] = 6;
+
+		pIdx[24] = 4;//後ろ
+		pIdx[25] = 6;
+		pIdx[26] = 5;
+		pIdx[27] = 6;
+		pIdx[28] = 7;
+		pIdx[29] = 5;
+
+		pIdx[30] = 3;//下
+		pIdx[31] = 4;
+		pIdx[32] = 2;
+		pIdx[33] = 4;
+		pIdx[34] = 5;
+		pIdx[35] = 2;
+
+
+		g_pIdxBuffbox->Unlock();
+	}
+
+
+
+	//	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+
+
+		//頂点の法線をノーマライズする
+	pDevicebox->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+
+
+	for (int i = 0; i < NUM_BOX; i++) {
+		//ワールドマトリックスの設定
+		pDevicebox->SetTransform(D3DTS_WORLD, &g_Box[i].g_mtxWorldbox);
+		/*ライティングモードTRUEの処理内容
+		//LIGHTベクトルを作成
+		D3DXVECTOR3 light;
+		light.x = 0.0f;
+		light.y = -1.0f;
+		light.z = 0.0f;
+
+		{//頂点バッファの中身を埋める
+			VERTEX_3D *pVtx;
+
+			//頂点データの範囲をロックし、頂点バッファへのポインタを取得
+			g_pVtxBuffbox->Lock(0, 0, (void**)&pVtx, 0);
+
+			D3DXVECTOR3 calc_nor;
+
+			//ベクトルに行列をかけて変形してくれる関数
+			D3DXVec3TransformNormal(&calc_nor, &pVtx[0].nor, &g_mtxWorldbox);//(答えを代入,かけるもの,かけるもの)
+
+			float color =D3DXVec3Dot(&light, &calc_nor);//内積計算
+
+			if (color > 0) {//内積の値が0を超えたらもう黒なので0にする
+				color = 0;
+			}
+
+			//-1～0の値を1～0に書き換える
+			color = fabs(color);
+
+			//頂点カラーの設定
+			pVtx[0].col = D3DXCOLOR(color, color, color, 1.0f);
+			pVtx[1].col = D3DXCOLOR(color, color, color, 1.0f);
+			pVtx[2].col = D3DXCOLOR(color, color, color, 1.0f);
+			pVtx[3].col = D3DXCOLOR(color, color, color, 1.0f);
+			pVtx[4].col = D3DXCOLOR(color, color, color, 1.0f);
+			pVtx[5].col = D3DXCOLOR(color, color, color, 1.0f);
+
+
+
+			//頂点データをアンロックする
+			g_pVtxBuffbox->Unlock();
+		}
+		*/
+		//頂点バッファをデバイスのデータストリームにバインド
+		pDevicebox->SetStreamSource(0, g_pVtxBuffbox, 0, sizeof(VERTEX_3D));
+
+		pDevicebox->SetIndices(g_pIdxBuffbox);
+
+		//頂点フォーマットの設定
+		pDevicebox->SetFVF(FVF_VERTEX_3D);
+
+		//テクスチャの設定
+		pDevicebox->SetTexture(0, Texture_GetTexture(TEXTURE_INDEX_FIELD01));
+
+		//ポリゴンの描画(インデックスバッファ用）
+		pDevicebox->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, g_NumIndexbox, 0, 12);//一番最後がポリゴン数
+
+		////ポリゴンの描画
+		//pDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, NUM_POLYGON);
+
+	}
+	return S_OK;
+
+
 
 	// 位置・回転・スケールの初期設定
 	for (int i = 0; i < NUM_BOX; i++) {
@@ -629,14 +947,14 @@ HRESULT MakeVertexbox(LPDIRECT3DDEVICE9 pDevice)
 		g_pVtxBuffbox->Lock(0, 0, (void**)&pVtx, 0);
 
 		//頂点座標の設定
-		pVtx[0].pos = D3DXVECTOR3(-BOX_WIDTH, BOX_HIGHT, -BOX_DEPTH);//上
-		pVtx[1].pos = D3DXVECTOR3(BOX_WIDTH, BOX_HIGHT, -BOX_DEPTH);
-		pVtx[2].pos = D3DXVECTOR3(-BOX_WIDTH, -BOX_HIGHT, -BOX_DEPTH);
-		pVtx[3].pos = D3DXVECTOR3(BOX_WIDTH, -BOX_HIGHT, -BOX_DEPTH);
-		pVtx[4].pos = D3DXVECTOR3(BOX_WIDTH, -BOX_HIGHT, BOX_DEPTH);
-		pVtx[5].pos = D3DXVECTOR3(-BOX_WIDTH, -BOX_HIGHT, BOX_DEPTH);
-		pVtx[6].pos = D3DXVECTOR3(BOX_WIDTH, BOX_HIGHT, BOX_DEPTH);//前
-		pVtx[7].pos = D3DXVECTOR3(-BOX_WIDTH, BOX_HIGHT, BOX_DEPTH);
+		pVtx[0].pos = D3DXVECTOR3(-BOX_WIDTH, 100.0f, -BOX_DEPTH);//上
+		pVtx[1].pos = D3DXVECTOR3(BOX_WIDTH, 100.0f, -BOX_DEPTH);
+		pVtx[2].pos = D3DXVECTOR3(-BOX_WIDTH, 0.0f, -BOX_DEPTH);
+		pVtx[3].pos = D3DXVECTOR3(BOX_WIDTH, 0.0f, -BOX_DEPTH);
+		pVtx[4].pos = D3DXVECTOR3(BOX_WIDTH, 0.0f, BOX_DEPTH);
+		pVtx[5].pos = D3DXVECTOR3(-BOX_WIDTH, 0.0f, BOX_DEPTH);
+		pVtx[6].pos = D3DXVECTOR3(BOX_WIDTH, 100.0f, BOX_DEPTH);//前
+		pVtx[7].pos = D3DXVECTOR3(-BOX_WIDTH, 100.0f, BOX_DEPTH);
 		//pVtx[8].pos = D3DXVECTOR3(-box_WIDTH, -box_HIGHT, -box_DEPTH);
 		//pVtx[9].pos = D3DXVECTOR3(box_WIDTH, box_HIGHT, -box_DEPTH);
 		//pVtx[10].pos = D3DXVECTOR3(box_WIDTH, -box_HIGHT, -box_DEPTH);

@@ -9,6 +9,7 @@
 #include "input.h"
 #include "shadow.h"
 #include "bullet.h"
+#include "billboard.h"
 
 //***************************************************************************** マクロ定義
 //*****************************************************************************
@@ -30,9 +31,12 @@ static LPDIRECT3DTEXTURE9	g_pTextureModel;	// テクスチャへのポインタ
 static LPD3DXMESH			g_pMeshModel;		// メッシュ情報へのポインタ
 static LPD3DXBUFFER			g_pBuffMatModel;	// マテリアル情報へのポインタ
 static DWORD				g_nNumMatModel;		// マテリアル情報の総数
-
+static int moveset;
 ENEMY g_Enemy[MAX_ENEMY];
-
+const int GO = 1;
+const int BACK = 2;
+const int LEFT = 3;
+const int RIGHT = 4;
 
 //=============================================================================
 // 初期化処理
@@ -40,12 +44,12 @@ ENEMY g_Enemy[MAX_ENEMY];
 HRESULT Enemy_Initialize()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
-
+	moveset = GO;
 	g_pTextureModel = NULL;
 	g_pMeshModel = NULL;
 	g_pBuffMatModel = NULL;
 
-	float offset = ((50.0f * MAX_ENEMY / 2) - 25.0f)*5;
+	float offset = ((50.0f * MAX_ENEMY / 2) - 25.0f) * 5;
 
 	// 位置・向き・移動量の初期設定
 	for (int i = 0; i < MAX_ENEMY; i++)
@@ -98,19 +102,19 @@ void Enemy_Finalize(void)
 		Shadow_Release(g_Enemy[i].idxShadow);
 	}
 
-	if(g_pTextureModel != NULL)
+	if (g_pTextureModel != NULL)
 	{// テクスチャの開放
 		g_pTextureModel->Release();
 		g_pTextureModel = NULL;
 	}
 
-	if(g_pMeshModel != NULL)
+	if (g_pMeshModel != NULL)
 	{// メッシュの開放
 		g_pMeshModel->Release();
 		g_pMeshModel = NULL;
 	}
 
-	if(g_pBuffMatModel != NULL)
+	if (g_pBuffMatModel != NULL)
 	{// マテリアルの開放
 		g_pBuffMatModel->Release();
 		g_pBuffMatModel = NULL;
@@ -122,9 +126,44 @@ void Enemy_Finalize(void)
 //=============================================================================
 void Enemy_Update(void)
 {
+	
+
+
 	//当たり判定用座標更新
 	for (int i = 0; i < MAX_ENEMY; i++)
 	{
+		if (g_Enemy[i].posModel.z < -1000.0f) {
+			moveset = BACK;
+		}
+		else if (g_Enemy[i].posModel.z > 100.0f) {
+			moveset = GO;
+		}
+		
+		switch (moveset)
+		{
+		case GO:
+			g_Enemy[i].moveModel.x = 0.0f;
+			g_Enemy[i].moveModel.z = -1.0f;
+			break;
+
+		case BACK:
+			g_Enemy[i].moveModel.x = 0.0f;
+			g_Enemy[i].moveModel.z = 1.0f;
+			break;
+		case LEFT:
+			g_Enemy[i].moveModel.x = -1.0f;
+			g_Enemy[i].moveModel.z = 0.0f;
+			break;
+		case RIGHT:
+			g_Enemy[i].moveModel.x = 1.0f;
+			g_Enemy[i].moveModel.z = 0.0f;
+			break;
+		default:
+			break;
+		}
+
+		g_Enemy[i].posModel.x += g_Enemy[i].moveModel.x;
+		g_Enemy[i].posModel.z += g_Enemy[i].moveModel.z;
 		//有効フラグをチェック
 		if (g_Enemy[i].bUse == false)
 			continue;
@@ -136,7 +175,29 @@ void Enemy_Update(void)
 		g_Enemy[i].col_aabb.cx = g_Enemy[i].posModel.x;
 		g_Enemy[i].col_aabb.cy = g_Enemy[i].posModel.y;
 		g_Enemy[i].col_aabb.cz = g_Enemy[i].posModel.z;
-	}										
+
+
+		if (g_Enemy[i].posModel.x<0.0f || g_Enemy[i].posModel.x>1100.0f || g_Enemy[i].posModel.z > 0.0f || g_Enemy[i].posModel.z < -1100.0f) {
+			if (g_Enemy[i].posModel.x < 0.0f) {
+				g_Enemy[i].posModel.x = 0.0f;
+			}
+			if (g_Enemy[i].posModel.x > 1100.0f) {
+				g_Enemy[i].posModel.x = 1100.0f;
+			}
+			if (g_Enemy[i].posModel.z > 0.0f) {
+				g_Enemy[i].posModel.z = 0.0f;
+			}
+			if (g_Enemy[i].posModel.z < -1100.0f) {
+				g_Enemy[i].posModel.z = -1100.0f;
+			}
+			MakeVertexBillboard();
+			SetVertexBillboard(g_Enemy[i].posModel.x, 10.0f, g_Enemy[i].posModel.z);
+
+			// 敵の消滅処理
+			Shadow_Release(g_Enemy[i].idxShadow);
+			g_Enemy[i].bUse = false;
+		}
+	}
 }
 
 //=============================================================================

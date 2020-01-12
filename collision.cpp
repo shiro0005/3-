@@ -116,8 +116,9 @@ void Collision_Bullet_vs_Enemy(void)
 				// “–‚½‚Á‚Ä‚é
 
 				// “G‚ÌÁ–Åˆ—
-				Shadow_Release(pEnemy[j].idxShadow);
-				pEnemy[j].bUse = false;
+				/*Shadow_Release(pEnemy[j].idxShadow);
+				pEnemy[j].bUse = false;*/
+				pEnemy[j].posModel += pBullet[i].g_moveBullet*50;
 
 				// ’e‚ÌÁ–Åˆ—
 				Shadow_Release(pBullet[i].g_nIdxShadowBullet);

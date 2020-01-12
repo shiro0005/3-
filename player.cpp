@@ -32,16 +32,6 @@ LPD3DXMESH			g_pMeshModel;		// メッシュ情報へのポインタ
 LPD3DXBUFFER		g_pBuffMatModel;	// マテリアル情報へのポインタ
 DWORD				g_nNumMatModel;		// マテリアル情報の総数
 
-struct PLAYER
-{
-	D3DXMATRIX			mtxWorldModel;	// ワールドマトリックス
-	D3DXVECTOR3			posModel;			// 現在の位置
-	D3DXVECTOR3			rotModel;			// 現在の向き
-	D3DXVECTOR3			rotDestModel;		// 目的の向き
-	D3DXVECTOR3			moveModel;		// 移動量
-
-	int					idxShadow;
-};
 
 PLAYER player;
 
@@ -196,9 +186,9 @@ void Player_Update(void)
 			player.rotDestModel.y -= D3DX_PI * 2.0f;
 		}
 	}
-	if (Keyboard_IsTrigger(DIK_P))
+	if (Keyboard_IsTrigger(DIK_SPACE))
 	{//弾丸射出処理
-		Bullet_Create(player.posModel.x, player.posModel.z, D3DXVECTOR2(0.0f,1.0f));
+		Bullet_Create(player.posModel.x, player.posModel.z, D3DXVECTOR2(player.moveModel.x,player.moveModel.z));
 	}
 
 	// 目的の角度までの差分
@@ -310,5 +300,9 @@ void Player_Draw(void)
 
 	//マテリアルをデフォルトに戻す
 	pDevice->SetMaterial(&matDef);
+}
+
+PLAYER GetPlayer() {
+	return player;
 }
 

@@ -90,6 +90,11 @@ void Bullet_Finalize(void)
 //=============================================================================
 void Bullet_Update(void)
 {
+	CAMERA *pCamera;
+
+	// ƒJƒƒ‰‚Ìæ“¾
+	pCamera = GetCamera();
+
 	for (int i= 0; i < MAX_BULLET; i++) {
 		if (g_Bullet[i].bUse) {
 			//ŠÔŒo‰ß‚³‚¹‚é
@@ -236,7 +241,7 @@ HRESULT MakeVertexBullet(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[3].pos = D3DXVECTOR3(BULLET_SIZE_X / 2, -BULLET_SIZE_Y / 2, 0.0f); -
 
 			// –@ü‚Ìİ’è
-			pVtx[0].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+		pVtx[0].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 		pVtx[1].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 		pVtx[2].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 		pVtx[3].nor = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
@@ -302,9 +307,9 @@ void Bullet_Create(float x, float y, D3DXVECTOR2 dir)
 
 		// ’e‚ÌˆÚ“®•ûŒü‚ğw’è‚·‚é
 		D3DXVec2Normalize(&dir, &dir);
-		g_Bullet[i].g_moveBullet.x= dir.x;
+		g_Bullet[i].g_moveBullet.x= dir.x*5.0f;
 		g_Bullet[i].g_moveBullet.y = 0.0f;
-		g_Bullet[i].g_moveBullet.z = dir.y;
+		g_Bullet[i].g_moveBullet.z = dir.y*5.0f;
 
 		//// ’e‚ÌˆÚ“®•ûŒü‚©‚ç’e‚Ì‰ñ“]Šp“x‚ğ‹‚ß‚é
 		//g_Bullets[i].rotation = atan2f(dir.y, dir.x) + M_PI / 2;

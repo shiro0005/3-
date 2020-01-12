@@ -17,8 +17,8 @@
 #define	FIELD_DEPTH		(100.0f)						// 地面の奥行(Z方向)
 #define FIELD_HIGHT     (100.0f)                        //地面の高さ(Y方向)
 
-#define BLOCK_X 100                                       //ブロック横の数  変えるときは波生成の数字も変える
-#define BLOCK_Y 100                                       //縦の数
+#define BLOCK_X 11                                       //ブロック横の数  変えるときは波生成の数字も変える
+#define BLOCK_Y 11                                       //縦の数
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -54,6 +54,7 @@ float g_rot1_x = 0.01f;
 float g_rot2_x = 0.01f;
 int g_NumIndexField = 36;
 int FrameCnt;
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -274,7 +275,7 @@ void Field_Draw(void)
 		pDevice->SetFVF(FVF_VERTEX_3D);
 
 		//テクスチャの設定
-		pDevice->SetTexture(0, Texture_GetTexture(TEXTURE_INDEX_FIELD01));
+		pDevice->SetTexture(0, Texture_GetTexture(TEXTURE_INDEX_FIELD02));
 
 		//ポリゴンの描画(インデックスバッファ用）
 		pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, g_NumVertex, 0, g_NumPolygon);//一番最後がポリゴン数,右から2番目が頂点数

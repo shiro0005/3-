@@ -7,12 +7,16 @@
 #include "light.h"
 #include "field.h"
 #include "grid.h"
-#include "debugproc.h"
+//#include "debugproc.h"
 #include "player.h"
 #include "billboard.h"
 #include "shadow.h"
 #include "bullet.h"
 #include "box.h"
+#include "wallmap.h"
+#include "wallB.h"
+#include "wallL.h"
+#include "wallR.h"
 #include "enemy.h"
 #include "collision.h"
 #include <time.h>
@@ -60,7 +64,9 @@ static void Update(void);
 // ゲームの描画関数
 static void Draw(void);
 
-
+//フラグ　処理を1回だけするため
+static bool Flag = false;
+int ran;
 /*------------------------------------------------------------------------------
 メイン
 ------------------------------------------------------------------------------*/
@@ -236,7 +242,7 @@ bool Initialize(HINSTANCE hInst)
 	Texture_Load();
 
 	// デバッグ表示処理 
-	DebugProc_Initialize();
+	//DebugProc_Initialize();
 
 	// カメラの初期化処理
 	Camera_Initialize();
@@ -247,9 +253,11 @@ bool Initialize(HINSTANCE hInst)
 	// 地面の初期化処理
 	Field_Initialize();
 
-	//box
-	box_Initialize();
-
+	//wall
+	Wall_Initialize();
+	WallL_Initialize();
+	WallB_Initialize();
+	WallR_Initialize();
 	//影の初期化
 	Shadow_Initialize();//使用する処理より先に初期化しないとダメ
 
@@ -260,7 +268,7 @@ bool Initialize(HINSTANCE hInst)
 	Billboard_Initialize();
 
 	//プレイヤーの初期化
-	Player_Initialize(D3DXVECTOR3(1500, 100, -1300), D3DXVECTOR3(0, 0, 0));
+	Player_Initialize(D3DXVECTOR3(500, 100, -600), D3DXVECTOR3(0, 0, 0));
 
 	//敵の初期化
 	Enemy_Initialize();
@@ -268,6 +276,7 @@ bool Initialize(HINSTANCE hInst)
 	//弾丸の初期化
 	Bullet_Initialize();
 
+	//
 	
 
 	return true;
@@ -283,6 +292,11 @@ void Finalize(void)
 
 	// 地面の終了処理
 	Field_Finalize();
+
+	Wall_Finalize();
+	WallB_Finalize();
+	WallR_Finalize();
+	WallL_Finalize();
 
 	//box
 	//box_Finalize();
@@ -305,6 +319,7 @@ void Finalize(void)
 	//弾丸の終了処理
 	Bullet_Finalize();
 
+	
 	// テクスチャの解放
 	Texture_Release();
 
@@ -338,7 +353,7 @@ void Update(void)
 	Field_Update();
 
 	//box
-	box_Update();
+	//box_Update();
 
 	//グリッドの更新処理
 //	Grid_Update();
@@ -357,6 +372,9 @@ void Update(void)
 
 	//弾丸の更新処理
 	Bullet_Update();
+
+	//
+	
 
 	//当たり判定
 	Collision_Update();
@@ -381,9 +399,13 @@ void Draw(void)
 	// 地面の描画処理
 	Field_Draw();
 
-	//box
-	box_Draw();
-
+	
+	//壁の描画
+	
+    Wall_Draw(); 
+	WallL_Draw();
+	WallB_Draw();
+	WallR_Draw();
 	//グリッドの描画処理
     //Grid_Draw();
 
@@ -402,10 +424,13 @@ void Draw(void)
 	//弾丸の描画処理
 	Bullet_Draw();
 
+	//
+	
+
 	// デバッグ表示の描画処理
 	if (g_bDispDebug)
 	{
-		DebugProc_Draw();
+		//DebugProc_Draw();
 	}
 
 	// 描画バッチ命令の終了

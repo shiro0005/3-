@@ -117,7 +117,7 @@ void Light_Finalize(void)
 void Light_Update(void)
 {
 	cnt++;
-	if (cnt > 120) {
+	if (cnt >= 120) {
 		LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
 		if (!flag) {
 			pDevice->LightEnable(0, FALSE);//‚±‚±‚ª‘S‘Ì‚ÌŒõ

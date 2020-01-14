@@ -46,3 +46,6 @@ typedef struct
 //ウィンドウハンドルのGetter
 HWND GetHWND();
 double frand();
+int Givetime(int);
+int GetTime();
+int Getfig();

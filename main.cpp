@@ -69,6 +69,8 @@ static void Draw(void);
 //フラグ　処理を1回だけするため
 static bool Flag = false;
 int ran;
+static int timen;
+static int fig;
 /*------------------------------------------------------------------------------
 メイン
 ------------------------------------------------------------------------------*/
@@ -172,7 +174,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				dwFrameCount = 0;
 			}
 
-			if ((dwCurrentTime - dwExecLastTime) >= (1000 / 60))
+			if ((dwCurrentTime - dwExecLastTime) >= (1000 / 60))//60fps=1秒
 			{
 #ifdef _DEBUG
 //				PrintDebugProc("FPS:%d\n", g_nCountFPS);
@@ -328,4 +330,32 @@ HWND GetHWND(){
 
 double frand() {
 	return (double)rand() / RAND_MAX;
+}
+
+int Givetime(int t) {
+	timen = t / 60;
+	if (timen >= 10000) {
+		fig = 5;
+	}
+	else if (timen >= 1000) {
+		fig = 4;
+	}
+	else if (timen >= 100) {
+		fig = 3;
+	}
+	else if (timen >= 10) {
+		fig = 2;
+	}
+	else if (timen >= 1) {
+		fig = 1;
+	}
+	return true;
+}
+
+int GetTime() {
+	return timen;
+}
+
+int Getfig() {
+	return fig;
 }

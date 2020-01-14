@@ -54,7 +54,7 @@ float g_rot1_x = 0.01f;
 float g_rot2_x = 0.01f;
 int g_NumIndexField = 36;
 int FrameCnt;
-
+static bool flag = false;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -110,18 +110,42 @@ void Field_Finalize(void)
 //=============================================================================
 void Field_Update(void)
 {
-	//FrameCnt++;
+	FrameCnt++;
 
-	//D3DXMATRIX mtxScl, mtxRot, mtxTranslate;
-	////ワールドマトリックスの初期化
-	//for (int i = 0; i < NUM_BOX; i++) {
-	//	D3DXMatrixIdentity(&g_Box[i].g_mtxWorldField);
-	//}
-	//if (FrameCnt >= 10) {
+	if (FrameCnt >= 240) {
+		D3DXMATRIX mtxScl, mtxRot, mtxTranslate;
 
-	//	VERTEX_3D *pVtx;
-	//	//頂点データの範囲をロックし、頂点バッファへのポインタを取得
-	//	g_pVtxBuffField->Lock(0, 0, (void**)&pVtx, 0);
+		//ワールドマトリックスの初期化
+		for (int i = 0; i < NUM_BOX; i++) {
+			D3DXMatrixIdentity(&g_Field[i].g_mtxWorldField);
+		}
+
+		VERTEX_3D *pVtx;
+
+
+		//頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		g_pVtxBuffField->Lock(0, 0, (void**)&pVtx, 0);
+
+		if (!flag) {
+			for (int z = 0; z < BLOCK_Y + 1; z++) {
+				for (int x = 0; x < BLOCK_X + 1; x++) {
+					//頂点座標の設定
+					pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, rand() % 100, z*-100.0f);
+				}
+			}
+			flag = true;
+		}
+		else {
+			for (int z = 0; z < BLOCK_Y + 1; z++) {
+				for (int x = 0; x < BLOCK_X + 1; x++) {
+					//頂点座標の設定
+					pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 0.0f, z*-100.0f);
+				}
+			}
+			flag = false;
+		}
+		FrameCnt = 0;
+	}
 
 
 	//	zcnt[5] ++;//カウント

@@ -10,6 +10,7 @@
 //#include "shadow.h"
 #include "bullet.h"
 #include "billboard.h"
+#include "field.h"
 
 //***************************************************************************** マクロ定義
 //*****************************************************************************
@@ -169,6 +170,8 @@ void Enemy_Update(void)
 
 		g_Enemy[i].posModel.x += g_Enemy[i].moveModel.x;
 		g_Enemy[i].posModel.z += g_Enemy[i].moveModel.z;
+
+		g_Enemy[i].posModel.y = GetY(g_Enemy[i].posModel.x, g_Enemy[i].posModel.z);
 		//有効フラグをチェック
 		if (g_Enemy[i].bUse == false)
 			continue;

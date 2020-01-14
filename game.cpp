@@ -16,6 +16,7 @@
 #include "fade.h"
 #include "collision.h"
 #include "scene.h"
+#include "result.h"
 #include <time.h>
 
 
@@ -128,6 +129,7 @@ void Game_Finalize(void)
 
 void Game_Update(void)
 {
+	g_Score++;
 
 	// ƒJƒƒ‰‚ÌXVˆ—
 	Camera_Update();
@@ -170,6 +172,7 @@ void Game_Update(void)
 			Fade_Start(true, 90, D3DCOLOR_RGBA(0, 0, 0, 0));
 			Use = true;
 		}if (!Fade_IsFade()) {
+			Givetime(g_Score);
 			Scene_Change(SCENE_INDEX_RESULT);
 
 		}

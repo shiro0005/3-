@@ -7,7 +7,7 @@
 #include "myDirect3D.h"
 #include "camera.h"
 #include "input.h"
-#include "shadow.h"
+//#include "shadow.h"
 #include "bullet.h"
 #include "billboard.h"
 
@@ -31,7 +31,9 @@ static LPDIRECT3DTEXTURE9	g_pTextureModel;	// テクスチャへのポインタ
 static LPD3DXMESH			g_pMeshModel;		// メッシュ情報へのポインタ
 static LPD3DXBUFFER			g_pBuffMatModel;	// マテリアル情報へのポインタ
 static DWORD				g_nNumMatModel;		// マテリアル情報の総数
-static int moveset;
+
+static int deletecnt;
+
 ENEMY g_Enemy[MAX_ENEMY];
 const int GO = 1;
 const int BACK = 2;
@@ -44,17 +46,18 @@ const int RIGHT = 4;
 HRESULT Enemy_Initialize()
 {
 	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
-	moveset = GO;
+	
 	g_pTextureModel = NULL;
 	g_pMeshModel = NULL;
 	g_pBuffMatModel = NULL;
 
 	float offset = ((50.0f * MAX_ENEMY / 2) - 25.0f) * 5;
 
+	deletecnt = 0;
 	// 位置・向き・移動量の初期設定
 	for (int i = 0; i < MAX_ENEMY; i++)
 	{
-		g_Enemy[i].posModel = D3DXVECTOR3(150.0f*i + offset, 0.0f, -550.0f);
+		g_Enemy[i].posModel = D3DXVECTOR3(130.0f*i + offset, 0.0f, -550.0f);
 		g_Enemy[i].rotModel = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[i].rotDestModel = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Enemy[i].moveModel = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -62,8 +65,10 @@ HRESULT Enemy_Initialize()
 		//当たり判定用スフィアの半径
 		g_Enemy[i].col_circle.r = 10.0f;
 
+		g_Enemy[i].moveset = GO;
+
 		//影の作成
-		g_Enemy[i].idxShadow = Shadow_Create(g_Enemy[i].posModel, D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+		//g_Enemy[i].idxShadow = Shadow_Create(g_Enemy[i].posModel, D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 
 		g_Enemy[i].bUse = true;
 	}
@@ -96,11 +101,11 @@ HRESULT Enemy_Initialize()
 //=============================================================================
 void Enemy_Finalize(void)
 {
-	//影の解放処理
-	for (int i = 0; i < MAX_ENEMY; i++)
-	{
-		Shadow_Release(g_Enemy[i].idxShadow);
-	}
+	////影の解放処理
+	//for (int i = 0; i < MAX_ENEMY; i++)
+	//{
+	//	Shadow_Release(g_Enemy[i].idxShadow);
+	//}
 
 	if (g_pTextureModel != NULL)
 	{// テクスチャの開放
@@ -133,13 +138,13 @@ void Enemy_Update(void)
 	for (int i = 0; i < MAX_ENEMY; i++)
 	{
 		if (g_Enemy[i].posModel.z < -1000.0f) {
-			moveset = BACK;
+			g_Enemy[i].moveset = BACK;
 		}
-		else if (g_Enemy[i].posModel.z > 100.0f) {
-			moveset = GO;
+		else if (g_Enemy[i].posModel.z > -100.0f) {
+			g_Enemy[i].moveset = GO;
 		}
 		
-		switch (moveset)
+		switch (g_Enemy[i].moveset)
 		{
 		case GO:
 			g_Enemy[i].moveModel.x = 0.0f;
@@ -178,6 +183,8 @@ void Enemy_Update(void)
 
 
 		if (g_Enemy[i].posModel.x<0.0f || g_Enemy[i].posModel.x>1100.0f || g_Enemy[i].posModel.z > 0.0f || g_Enemy[i].posModel.z < -1100.0f) {
+			
+
 			if (g_Enemy[i].posModel.x < 0.0f) {
 				g_Enemy[i].posModel.x = 0.0f;
 			}
@@ -194,8 +201,12 @@ void Enemy_Update(void)
 			SetVertexBillboard(g_Enemy[i].posModel.x, 10.0f, g_Enemy[i].posModel.z);
 
 			// 敵の消滅処理
-			Shadow_Release(g_Enemy[i].idxShadow);
+			//Shadow_Release(g_Enemy[i].idxShadow);
 			g_Enemy[i].bUse = false;
+
+			if (g_Enemy[i].bUse == true)
+				continue;
+ 			deletecnt++;
 		}
 	}
 }
@@ -267,5 +278,9 @@ CIRCLE* Enemy_GetCollision(int index)
 ENEMY* GetEnemy(void)
 {
 	return &(g_Enemy[0]);
+}
+
+int GetDel() {
+	return deletecnt;
 }
 

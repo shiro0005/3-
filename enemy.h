@@ -25,8 +25,8 @@ struct ENEMY
 	D3DXVECTOR3			rotModel;			// 現在の向き
 	D3DXVECTOR3			rotDestModel;		// 目的の向き
 	D3DXVECTOR3			moveModel;		// 移動量
-	int					idxShadow;
-
+	int					idxShadow; 
+    int moveset;
 	CIRCLE				col_circle;		// 当たり判定用サークル
 	AABB                col_aabb;        //当たり判定ボックス
 	bool				bUse;
@@ -43,3 +43,4 @@ bool Enemy_IsEnable(int index);
 
 CIRCLE* Enemy_GetCollision(int index);
 ENEMY* GetEnemy(void);
+int GetDel();

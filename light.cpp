@@ -15,7 +15,8 @@
 // グローバル変数
 //*****************************************************************************
 D3DLIGHT9 g_aLight[NUM_LIGHT];		// ライト情報
-
+static int cnt;
+static bool flag;
 //=============================================================================
 // ライトの初期化処理
 //=============================================================================
@@ -23,6 +24,9 @@ void Light_Initialize(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice(); 
 	D3DXVECTOR3 vecDir;
+
+	cnt = 0;
+	flag = false;
 
 	// D3DLIGHT9構造体を0でクリアする
 	ZeroMemory(&g_aLight[0], sizeof(D3DLIGHT9));
@@ -112,5 +116,20 @@ void Light_Finalize(void)
 //=============================================================================
 void Light_Update(void)
 {
+	cnt++;
+	if (cnt > 120) {
+		LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+		if (!flag) {
+			pDevice->LightEnable(0, FALSE);//ここが全体の光
+			pDevice->LightEnable(1, FALSE);//ここが全体の光
+			flag = true;
+		}
+		else {
+			pDevice->LightEnable(0, TRUE);//ここが全体の光
+			pDevice->LightEnable(1, TRUE);//ここが全体の光
+			flag = false;
+		}
+		cnt = 0;
+	}
 }
 

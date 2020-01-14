@@ -170,22 +170,22 @@ void Player_Update(void)
 		player.rotDestModel.y = pCamera->rot.y + D3DX_PI * 0.0f;
 	}
 
-	if (Keyboard_IsPress(DIK_LSHIFT))
-	{// ç∂âÒì]
-		player.rotDestModel.y -= VALUE_ROTATE_MODEL;
-		if (player.rotDestModel.y < -D3DX_PI)
-		{
-			player.rotDestModel.y += D3DX_PI * 2.0f;
-		}
-	}
-	if (Keyboard_IsPress(DIK_RSHIFT))
-	{// âEâÒì]
-		player.rotDestModel.y += VALUE_ROTATE_MODEL;
-		if (player.rotDestModel.y > D3DX_PI)
-		{
-			player.rotDestModel.y -= D3DX_PI * 2.0f;
-		}
-	}
+	//if (Keyboard_IsPress(DIK_LSHIFT))
+	//{// ç∂âÒì]
+	//	player.rotDestModel.y -= VALUE_ROTATE_MODEL;
+	//	if (player.rotDestModel.y < -D3DX_PI)
+	//	{
+	//		player.rotDestModel.y += D3DX_PI * 2.0f;
+	//	}
+	//}
+	//if (Keyboard_IsPress(DIK_RSHIFT))
+	//{// âEâÒì]
+	//	player.rotDestModel.y += VALUE_ROTATE_MODEL;
+	//	if (player.rotDestModel.y > D3DX_PI)
+	//	{
+	//		player.rotDestModel.y -= D3DX_PI * 2.0f;
+	//	}
+	//}
 	if (Keyboard_IsTrigger(DIK_SPACE))
 	{//íeä€éÀèoèàóù
 		Bullet_Create(player.posModel.x, player.posModel.z, D3DXVECTOR2(player.moveModel.x,player.moveModel.z));
@@ -219,6 +219,23 @@ void Player_Update(void)
 
 	player.posModel.y = GetY(player.posModel.x, player.posModel.z);
 
+	if (player.posModel.x<5.0f || player.posModel.x>1095.0f || player.posModel.z > -5.0f || player.posModel.z < -1095.0f) {
+
+
+		if (player.posModel.x <= 5.0f) {
+			player.posModel.x = 5.0f;
+		}
+		if (player.posModel.x >= 1095.0f) {
+			player.posModel.x = 1095.0f;
+		}
+		if (player.posModel.z >= -5.0f) {
+			player.posModel.z = -5.0f;
+		}
+		if (player.posModel.z <= -1095.0f) {
+			player.posModel.z = -1095.0f;
+		}
+
+	}
 	// à⁄ìÆó Ç…äµê´ÇÇ©ÇØÇÈ
 	player.moveModel.x += (0.0f - player.moveModel.x) * RATE_MOVE_MODEL;
 	player.moveModel.z += (0.0f - player.moveModel.z) * RATE_MOVE_MODEL;

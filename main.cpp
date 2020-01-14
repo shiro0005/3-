@@ -19,6 +19,8 @@
 #include "wallR.h"
 #include "enemy.h"
 #include "collision.h"
+#include "scene.h"
+#include "fade.h"
 #include <time.h>
 
 
@@ -244,38 +246,9 @@ bool Initialize(HINSTANCE hInst)
 	// デバッグ表示処理 
 	//DebugProc_Initialize();
 
-	// カメラの初期化処理
-	Camera_Initialize();
+	Scene_Initialize(SCENE_INDEX_TITLE);
 
-	// ライトの初期化処理
-	Light_Initialize();
-
-	// 地面の初期化処理
-	Field_Initialize();
-
-	//wall
-	Wall_Initialize();
-	WallL_Initialize();
-	WallB_Initialize();
-	WallR_Initialize();
-	//影の初期化
-	Shadow_Initialize();//使用する処理より先に初期化しないとダメ
-
-	//グリッドの初期化
-//	Grid_Initialize();
-	
-    //billboard初期化
-	Billboard_Initialize();
-
-	//プレイヤーの初期化
-	Player_Initialize(D3DXVECTOR3(500, 100, -600), D3DXVECTOR3(0, 0, 0));
-
-	//敵の初期化
-	Enemy_Initialize();
-
-	//弾丸の初期化
-	Bullet_Initialize();
-
+	Fade_Initialize();
 	//
 	
 
@@ -284,45 +257,14 @@ bool Initialize(HINSTANCE hInst)
 
 void Finalize(void)
 {
-	// カメラの終了処理
-	Camera_Finalize();
-
-	// ライトの終了処理
-	Light_Finalize();
-
-	// 地面の終了処理
-	Field_Finalize();
-
-	Wall_Finalize();
-	WallB_Finalize();
-	WallR_Finalize();
-	WallL_Finalize();
-
-	//box
-	//box_Finalize();
-
-	//グリッドの終了処理
-//	Grid_Finalize();
 	
-	//終了処理
-	Billboard_Finalize();
-
-	//影の終了処理
-	Shadow_Finalize();
-
-	//敵の終了処理
-	Enemy_Finalize();
-
-	//プレイヤーの終了処理
-	Player_Finalize();
-
-	//弾丸の終了処理
-	Bullet_Finalize();
-
 	
 	// テクスチャの解放
 	Texture_Release();
 
+	//Scene_Finalize();
+
+	Fade_Finalize();
 
 	// DirectInputの終了処理
 	GamePad_Finalize();
@@ -343,42 +285,9 @@ void Update(void)
 	//ゲームパッドの状態を更新する
 	GamePad_Update();
 
-	// カメラの更新処理
-	Camera_Update();
+	Scene_Update();
 
-	// ライトの更新処理
-	Light_Update();
-
-	// 地面の更新処理
-	Field_Update();
-
-	//box
-	//box_Update();
-
-	//グリッドの更新処理
-//	Grid_Update();
-
-	//
-	Shadow_Update();
-
-	//更新処理
-	Billboard_Update();
-
-	//プレイヤーの更新処理
-	Player_Update();
-
-	//敵の更新処理
-	Enemy_Update();
-
-	//弾丸の更新処理
-	Bullet_Update();
-
-	//
-	
-
-	//当たり判定
-	Collision_Update();
-
+	Fade_Update();
 }
 
 // ゲームの描画関数
@@ -392,38 +301,9 @@ void Draw(void)
 	// 描画バッチ命令の開始
 	pD3DDevice->BeginScene();
 
-
-	// カメラの設定
-	Camera_SetCamera();
-
-	// 地面の描画処理
-	Field_Draw();
-
+	Scene_Draw();
 	
-	//壁の描画
-	
-    Wall_Draw(); 
-	WallL_Draw();
-	WallB_Draw();
-	WallR_Draw();
-	//グリッドの描画処理
-    //Grid_Draw();
-
-	//
-	Shadow_Draw();
-
-	//描画処理
-	Billboard_Draw();
-
-	//プレイヤーの描画処理
-	Player_Draw();
-
-	//敵の描画処理
-	Enemy_Draw();
-
-	//弾丸の描画処理
-	Bullet_Draw();
-
+	Fade_Draw();
 	//
 	
 

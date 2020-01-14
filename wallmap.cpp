@@ -91,6 +91,8 @@ HRESULT Wall_Initialize(void)
 		g_Field[i].g_rot2Field = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_Field[i].g_sclField = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	}
+
+
 	return S_OK;
 }
 
@@ -265,10 +267,12 @@ HRESULT MakeVertexWall(LPDIRECT3DDEVICE9 pDevice)
 				pIdx[((BLOCK_X + 1) * 2 * cntY + cntY * 2) + cntX * 2] = (BLOCK_X + 1) + cntX + cntY * (BLOCK_X + 1);
 				pIdx[((BLOCK_X + 1) * 2 * cntY + cntY * 2) + cntX * 2 + 1] = cntX + cntY * (BLOCK_X + 1);
 			}
-			pIdx[((BLOCK_X + 1) * 2 * cntY + cntY * 2) + cntX * 2] = (BLOCK_X + 1) * cntY + cntX - 1;
-			pIdx[((BLOCK_X + 1) * 2 * cntY + cntY * 2) + cntX * 2 + 1] = (BLOCK_X + 1) * cntY + (BLOCK_X + 1) + cntX;
+			if (cntY != BLOCK_Y-1) {
+				pIdx[((BLOCK_X + 1) * 2 * cntY + cntY * 2) + cntX * 2] = (BLOCK_X + 1) * cntY + cntX - 1;
+				pIdx[((BLOCK_X + 1) * 2 * cntY + cntY * 2) + cntX * 2 + 1] = (BLOCK_X + 1) * cntY + (BLOCK_X + 1) + cntX;
+
+			}
 		}
-		
 		
 
 

@@ -7,6 +7,7 @@
 #include "myDirect3D.h"
 #include "camera.h"
 #include "input.h"
+#include "player.h"
 //#include "shadow.h"
 #include "bullet.h"
 #include "billboard.h"
@@ -34,12 +35,17 @@ static LPD3DXBUFFER			g_pBuffMatModel;	// マテリアル情報へのポインタ
 static DWORD				g_nNumMatModel;		// マテリアル情報の総数
 
 static int deletecnt;
-
+static int frame;
+static int SPEED;
 ENEMY g_Enemy[MAX_ENEMY];
 const int GO = 1;
 const int BACK = 2;
 const int LEFT = 3;
 const int RIGHT = 4;
+const int GOLEFT = 13;
+const int BACKLEFT = 23;
+const int GORIGHT = 14;
+const int BACKRIGHT = 24;
 
 //=============================================================================
 // 初期化処理
@@ -53,7 +59,8 @@ HRESULT Enemy_Initialize()
 	g_pBuffMatModel = NULL;
 
 	float offset = ((50.0f * MAX_ENEMY / 2) - 25.0f) * 5;
-
+	frame = 0;
+	SPEED = 1;
 	deletecnt = 0;
 	// 位置・向き・移動量の初期設定
 	for (int i = 0; i < MAX_ENEMY; i++)
@@ -138,31 +145,183 @@ void Enemy_Update(void)
 	//当たり判定用座標更新
 	for (int i = 0; i < MAX_ENEMY; i++)
 	{
-		if (g_Enemy[i].posModel.z < -1000.0f) {
+		if (deletecnt == 4) {
+			SPEED = 4;
+			PLAYER player = GetPlayer();
+
+			if (g_Enemy[i].posModel.x > 1000.0f) {
+				if (player.posModel.z > g_Enemy[i].posModel.z) {
+					g_Enemy[i].moveset = GOLEFT;
+				}
+				else {
+					g_Enemy[i].moveset = BACKLEFT;
+				}
+			}
+			else if (g_Enemy[i].posModel.x < 100.0f) {
+				if (player.posModel.z > g_Enemy[i].posModel.z) {
+					g_Enemy[i].moveset = GORIGHT;
+				}
+				else {
+					g_Enemy[i].moveset = BACKRIGHT;
+				}
+			}
+			else if (g_Enemy[i].posModel.z > -100.0f) {
+				if (player.posModel.x > g_Enemy[i].posModel.x) {
+					g_Enemy[i].moveset = GOLEFT;
+				}
+				else {
+					g_Enemy[i].moveset = GORIGHT;
+				}
+			}
+			else if (g_Enemy[i].posModel.z < -1000.0f) {
+				if (player.posModel.x > g_Enemy[i].posModel.x) {
+					g_Enemy[i].moveset = BACKLEFT;
+				}
+				else {
+					g_Enemy[i].moveset = BACKRIGHT;
+				}
+			}
+
+
+			/*if ( g_Enemy[i].posModel.x > 1000.0f) {
+				if (g_Enemy[i].posModel.z > -100.0f) {
+					g_Enemy[i].moveset = GOLEFT;
+				}
+				else if (g_Enemy[i].posModel.z < -1000.0f) {
+					g_Enemy[i].moveset = BACKLEFT;
+				}
+				else {
+					g_Enemy[i].moveset = GO;
+				}
+			}
+			else if (g_Enemy[i].posModel.x < 100.0f) {
+				if (g_Enemy[i].posModel.z > -100.0f) {
+					g_Enemy[i].moveset = GORIGHT;
+				}
+				else if (g_Enemy[i].posModel.z < -1000.0f) {
+					g_Enemy[i].moveset = BACKRIGHT;
+				}
+				else {
+					g_Enemy[i].moveset = BACK;
+				}
+			}
+			else if (g_Enemy[i].posModel.z > -100.0f) {
+				if (g_Enemy[i].posModel.x > -100.0f) {
+					g_Enemy[i].moveset = GORIGHT;
+				}
+				else if (g_Enemy[i].posModel.x < -1000.0f) {
+					g_Enemy[i].moveset = GOLEFT;
+				}
+				else {
+					g_Enemy[i].moveset = LEFT;
+				}
+			}
+			else if (g_Enemy[i].posModel.z < -1000.0f) {
+				if (g_Enemy[i].posModel.x > -100.0f) {
+					g_Enemy[i].moveset = BACKRIGHT;
+				}
+				else if (g_Enemy[i].posModel.x < -1000.0f) {
+					g_Enemy[i].moveset = BACKLEFT;
+				}
+				else {
+					g_Enemy[i].moveset = RIGHT;
+				}
+			}*/
+
+
+
+		}
+		else if (deletecnt == 3) {
+
+			if (g_Enemy[i].posModel.z > -100.0f || g_Enemy[i].posModel.x > 1000.0f) {
+				g_Enemy[i].moveset = GOLEFT;
+
+			}
+			else if (g_Enemy[i].posModel.z < -1000.0f || g_Enemy[i].posModel.x < 100.0f) {
+				g_Enemy[i].moveset = BACKRIGHT;
+			}
+
+
+
+		}
+		else if (deletecnt == 2) {
+
+			if (g_Enemy[i].posModel.z < -1000.0f|| g_Enemy[i].posModel.x > 1000.0f) {
+				g_Enemy[i].moveset = BACKLEFT;
+
+			}
+			else if (g_Enemy[i].posModel.z > -100.0f|| g_Enemy[i].posModel.x < 100.0f) {
+				g_Enemy[i].moveset = GORIGHT;
+			}
+
+
+
+		}
+		else if (g_Enemy[i].posModel.z < -1000.0f) {
 			g_Enemy[i].moveset = BACK;
+			if (deletecnt == 1) {
+				g_Enemy[i].moveset = LEFT;
+				frame++;
+				if (frame > 200) {
+					g_Enemy[i].moveset = RIGHT;
+				}
+				if (frame > 401) {
+					g_Enemy[i].moveset = LEFT;
+					frame = 0;
+				}
+			}
+			
 		}
 		else if (g_Enemy[i].posModel.z > -100.0f) {
 			g_Enemy[i].moveset = GO;
+			if (deletecnt == 1) {
+				g_Enemy[i].moveset = LEFT;
+				frame++;
+				if (frame > 200) {
+					g_Enemy[i].moveset = RIGHT;
+				}
+				if (frame > 401) {
+					g_Enemy[i].moveset = LEFT;
+					frame = 0;
+				}
+			}
 		}
 		
 		switch (g_Enemy[i].moveset)
 		{
 		case GO:
-			g_Enemy[i].moveModel.x = 0.0f;
-			g_Enemy[i].moveModel.z = -1.0f;
+			g_Enemy[i].moveModel.x = 0.0f*SPEED;
+			g_Enemy[i].moveModel.z = -1.0f*SPEED;
 			break;
 
 		case BACK:
-			g_Enemy[i].moveModel.x = 0.0f;
-			g_Enemy[i].moveModel.z = 1.0f;
+			g_Enemy[i].moveModel.x = 0.0f*SPEED;
+			g_Enemy[i].moveModel.z = 1.0f*SPEED;
 			break;
 		case LEFT:
-			g_Enemy[i].moveModel.x = -1.0f;
-			g_Enemy[i].moveModel.z = 0.0f;
+			g_Enemy[i].moveModel.x = -1.0f*SPEED;
+			g_Enemy[i].moveModel.z = 0.0f*SPEED;
 			break;
 		case RIGHT:
-			g_Enemy[i].moveModel.x = 1.0f;
-			g_Enemy[i].moveModel.z = 0.0f;
+			g_Enemy[i].moveModel.x = 1.0f*SPEED;
+			g_Enemy[i].moveModel.z = 0.0f*SPEED;
+			break;
+		case GOLEFT:
+			g_Enemy[i].moveModel.x = -1.0f*SPEED;
+			g_Enemy[i].moveModel.z = -1.0f*SPEED;
+			break;
+
+		case BACKLEFT:
+			g_Enemy[i].moveModel.x = -1.0f*SPEED;
+			g_Enemy[i].moveModel.z = 1.0f*SPEED;
+			break;
+		case GORIGHT:
+			g_Enemy[i].moveModel.x = 1.0f*SPEED;
+			g_Enemy[i].moveModel.z = -1.0f*SPEED;
+			break;
+		case BACKRIGHT:
+			g_Enemy[i].moveModel.x = 1.0f*SPEED;
+			g_Enemy[i].moveModel.z = 1.0f*SPEED;
 			break;
 		default:
 			break;

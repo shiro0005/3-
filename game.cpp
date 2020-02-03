@@ -171,7 +171,8 @@ void Game_Update(void)
 		if (!Use) {
 			Fade_Start(true, 90, D3DCOLOR_RGBA(0, 0, 0, 0));
 			Use = true;
-		}if (!Fade_IsFade()) {
+		}
+		if (!Fade_IsFade()) {
 			Givetime(g_Score);
 			Scene_Change(SCENE_INDEX_RESULT);
 

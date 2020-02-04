@@ -129,8 +129,14 @@ void Field_Update(void)
 		if (!flag) {
 			for (int z = 0; z < BLOCK_Y + 1; z++) {
 				for (int x = 0; x < BLOCK_X + 1; x++) {
-					//頂点座標の設定
-					pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, rand() % 100, z*-100.0f);
+					if (x==2||x==3||x==6||x==7||x==10||x==11) {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 100.0f, z*-100.0f);
+					}
+					else {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 50.0f, z*-100.0f);
+					}
 				}
 			}
 			flag = true;

@@ -232,6 +232,7 @@ void Enemy_Update(void)
 
 		}
 		else if (deletecnt == 3) {
+			SPEED = 2;
 
 			if (g_Enemy[i].posModel.z > -100.0f || g_Enemy[i].posModel.x > 1000.0f) {
 				g_Enemy[i].moveset = GOLEFT;

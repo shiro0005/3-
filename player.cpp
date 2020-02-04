@@ -188,7 +188,7 @@ void Player_Update(void)
 	//}
 	if (Keyboard_IsTrigger(DIK_SPACE))
 	{//’eŠÛËoˆ—
-		Bullet_Create(player.posModel.x, player.posModel.z, D3DXVECTOR2(player.moveModel.x,player.moveModel.z));
+		Bullet_Create(player.posModel.x,player.posModel.y, player.posModel.z, D3DXVECTOR2(player.moveModel.x,player.moveModel.z));
 	}
 
 	// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª

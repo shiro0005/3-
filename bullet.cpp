@@ -291,7 +291,7 @@ void SetVertexBullet(float fSizeX, float fSizeY)
 //=============================================================================
 // 頂点座標の設定
 //=============================================================================
-void Bullet_Create(float x, float y, D3DXVECTOR2 dir)
+void Bullet_Create(float x, float y,float z, D3DXVECTOR2 dir)
 {
 	for (int i = 0; i < MAX_BULLET; i++) {
 
@@ -302,8 +302,8 @@ void Bullet_Create(float x, float y, D3DXVECTOR2 dir)
 
 		// 弾の座標に引数の値を代入する
 		g_Bullet[i].g_posBullet.x = x;
-		g_Bullet[i].g_posBullet.y = 8.0f;
-		g_Bullet[i].g_posBullet.z = y;
+		g_Bullet[i].g_posBullet.y = y;
+		g_Bullet[i].g_posBullet.z = z;
 
 		// 弾の移動方向を指定する
 		D3DXVec2Normalize(&dir, &dir);

@@ -29,7 +29,7 @@ HRESULT Bullet_Initialize(void);
 void Bullet_Finalize(void);
 void Bullet_Update(void);
 void Bullet_Draw(void);
-void Bullet_Create(float, float, D3DXVECTOR2);
+void Bullet_Create(float, float, float, D3DXVECTOR2);
 bool Bullet_IsEnable(int index);
 CIRCLE *Bullet_GetCollision(int index);
 AABB *Bullet_GetCollisionBox(int index);

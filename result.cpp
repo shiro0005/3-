@@ -21,7 +21,7 @@ void Result_Finalize(void)
 
 void Result_Update(void)
 {
-	if( Keyboard_IsTrigger(DIK_RETURN) ) {
+	if( Keyboard_IsTrigger(DIK_RETURN)|| GamePad_IsTrigger(0, BUTTON_A)) {
 		Scene_Change(SCENE_INDEX_TITLE);
 	}
 }

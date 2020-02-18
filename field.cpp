@@ -17,8 +17,8 @@
 #define	FIELD_DEPTH		(100.0f)						// 地面の奥行(Z方向)
 #define FIELD_HIGHT     (100.0f)                        //地面の高さ(Y方向)
 
-#define BLOCK_X 11                                       //ブロック横の数  変えるときは波生成の数字も変える
-#define BLOCK_Y 11                                       //縦の数
+#define BLOCK_X 110                                       //ブロック横の数  変えるときは波生成の数字も変える
+#define BLOCK_Y 110                                       //縦の数
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -131,11 +131,11 @@ void Field_Update(void)
 				for (int x = 0; x < BLOCK_X + 1; x++) {
 					if (x==2||x==3||x==6||x==7||x==10||x==11) {
 						//頂点座標の設定
-						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 100.0f, z*-100.0f);
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 100.0f, z*-10.0f);
 					}
 					else {
 						//頂点座標の設定
-						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 50.0f, z*-100.0f);
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 0.0f, z*-10.0f);
 					}
 				}
 			}
@@ -145,7 +145,7 @@ void Field_Update(void)
 			for (int z = 0; z < BLOCK_Y + 1; z++) {
 				for (int x = 0; x < BLOCK_X + 1; x++) {
 					//頂点座標の設定
-					pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 0.0f, z*-100.0f);
+					pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 0.0f, z*-10.0f);
 				}
 			}
 			flag = false;
@@ -340,7 +340,7 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice)
 		for (int z = 0; z < BLOCK_Y + 1; z++) {
 			for (int x = 0; x < BLOCK_X + 1; x++) {
 				//頂点座標の設定
-				pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*100.0f, 0.0f, z*-100.0f);
+				pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 0.0f, z*-10.0f);
 
 				//法線ベクトルの設定
 				pVtx[z * (BLOCK_X + 1) + x].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);

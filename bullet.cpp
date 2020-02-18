@@ -101,7 +101,7 @@ void Bullet_Update(void)
 			g_Bullet[i].frame++;
 
 			//100フレーム経過で消滅
-			if (g_Bullet[i].frame > 100) {
+			if (g_Bullet[i].frame > 30) {
 				//影の開放処理
 				Shadow_Release(g_Bullet[i].g_nIdxShadowBullet);
 				g_Bullet[i].bUse = false;

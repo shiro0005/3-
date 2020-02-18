@@ -126,29 +126,29 @@ void Camera_Update(void)
 //		g_camera.posV.x = g_camera.posR.x - sinf(g_camera.rot.y) * g_camera.fDistance;
 //		g_camera.posV.z = g_camera.posR.z - cosf(g_camera.rot.y) * g_camera.fDistance;
 //	}
-//	if (Keyboard_IsPress(DIK_Y)) { //視点移動[上]
-//		g_camera.posV.y += VALUE_MOVE_CAMERA;
-//	}
-//	if (Keyboard_IsPress(DIK_N)) { // 視点移動[下]
-//		g_camera.posV.y -= VALUE_MOVE_CAMERA;
-//	}
-//	if (Keyboard_IsPress(DIK_Q)) {//注視点旋回[左]
-//		g_camera.rot.y -= VALUE_ROTATE_CAMERA;
-//
-//		if (g_camera.rot.y < -D3DX_PI) {
-//			g_camera.rot.y += D3DX_PI * 2.0f;
-//		}
-//		g_camera.posR.x = g_camera.posV.x + sinf(g_camera.rot.y) * g_camera.fDistance;
-//		g_camera.posR.z = g_camera.posV.z + cosf(g_camera.rot.y) * g_camera.fDistance;
-//	}
-//	if (Keyboard_IsPress(DIK_E)) { //注視点旋回[右]
-//		g_camera.rot.y += VALUE_ROTATE_CAMERA;
-//		if (g_camera.rot.y > D3DX_PI) {
-//			g_camera.rot.y -= D3DX_PI * 2.0f;
-//		}
-//		g_camera.posR.x = g_camera.posV.x + sinf(g_camera.rot.y) * g_camera.fDistance;
-//		g_camera.posR.z = g_camera.posV.z + cosf(g_camera.rot.y) * g_camera.fDistance;
-//	}
+	if (Keyboard_IsPress(DIK_Y)) { //視点移動[上]
+		g_camera.posV.y += VALUE_MOVE_CAMERA;
+	}
+	if (Keyboard_IsPress(DIK_N)) { // 視点移動[下]
+		g_camera.posV.y -= VALUE_MOVE_CAMERA;
+	}
+	if (Keyboard_IsPress(DIK_Q)) {//注視点旋回[左]
+		g_camera.rot.y -= VALUE_ROTATE_CAMERA;
+
+		if (g_camera.rot.y < -D3DX_PI) {
+			g_camera.rot.y += D3DX_PI * 2.0f;
+		}
+		g_camera.posR.x = g_camera.posV.x + sinf(g_camera.rot.y) * g_camera.fDistance;
+		g_camera.posR.z = g_camera.posV.z + cosf(g_camera.rot.y) * g_camera.fDistance;
+	}
+	if (Keyboard_IsPress(DIK_E)) { //注視点旋回[右]
+		g_camera.rot.y += VALUE_ROTATE_CAMERA;
+		if (g_camera.rot.y > D3DX_PI) {
+			g_camera.rot.y -= D3DX_PI * 2.0f;
+		}
+		g_camera.posR.x = g_camera.posV.x + sinf(g_camera.rot.y) * g_camera.fDistance;
+		g_camera.posR.z = g_camera.posV.z + cosf(g_camera.rot.y) * g_camera.fDistance;
+	}
 //	if (Keyboard_IsPress(DIK_T)) { //注視点移動[上]
 //		g_camera.posR.y += VALUE_MOVE_CAMERA;
 //	}

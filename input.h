@@ -38,3 +38,12 @@ void GamePad_Update(void);
 
 BOOL GamePad_IsPress(int padNo, DWORD button);
 BOOL GamePad_IsTrigger(int padNo, DWORD button);
+
+//---------------------------- game pad
+bool GamePad_Initialize(HINSTANCE hInstance, HWND hWnd);
+void GamePad_Finalize(void);
+void GamePad_Update(void);
+
+BOOL GamePad_IsPress(int padNo, DWORD button);
+BOOL GamePad_IsTrigger(int padNo, DWORD button);
+DIJOYSTATE2 GamePad_Stick();

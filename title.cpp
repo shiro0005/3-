@@ -24,7 +24,7 @@ void Title_Finalize(void)
 void Title_Update(void)
 {
 	if (!g_bEnd) {
-		if (Keyboard_IsTrigger(DIK_RETURN)) {
+		if (Keyboard_IsTrigger(DIK_RETURN)|| GamePad_IsTrigger(0, BUTTON_C)) {
 			Fade_Start(true, 30, D3DCOLOR_RGBA(0, 0, 0, 0));
 			g_bEnd = true;
 		}

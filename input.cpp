@@ -24,7 +24,7 @@ static LPDIRECTINPUTDEVICE8	g_pGamePad[GAMEPADMAX] = { NULL, NULL, NULL, NULL };
 static DWORD				g_padState[GAMEPADMAX];	// パッド情報（複数対応）
 static DWORD				g_padTrigger[GAMEPADMAX];
 static int					g_padCount = 0;			// 検出したパッドの数
-
+DIJOYSTATE2		dijs;
 
 bool initialize(HINSTANCE hInstance)
 {
@@ -219,7 +219,6 @@ void GamePad_Finalize(void)
 void GamePad_Update(void)
 {
 	HRESULT			result;
-	DIJOYSTATE2		dijs;
 	int				i;
 
 	for (i = 0; i<g_padCount; i++)
@@ -287,4 +286,8 @@ BOOL GamePad_IsPress(int padNo, DWORD button)
 BOOL GamePad_IsTrigger(int padNo, DWORD button)
 {
 	return (button & g_padTrigger[padNo]);
+}
+
+DIJOYSTATE2 GamePad_Stick() {
+	return dijs;
 }

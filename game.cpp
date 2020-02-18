@@ -12,6 +12,7 @@
 #include "wallB.h"
 #include "wallL.h"
 #include "wallR.h"
+#include "WALLW.h"
 #include "enemy.h"
 #include "fade.h"
 #include "collision.h"
@@ -56,6 +57,7 @@ void Game_Initialize(void)
 	WallL_Initialize();
 	WallB_Initialize();
 	WallR_Initialize();
+	WALLW_Initialize();
 	//影の初期化
 	Shadow_Initialize();//使用する処理より先に初期化しないとダメ
 
@@ -103,6 +105,7 @@ void Game_Finalize(void)
 	WallB_Finalize();
 	WallR_Finalize();
 	WallL_Finalize();
+	WALLW_Finalize();
 
 	//box
 	//box_Finalize();
@@ -233,6 +236,8 @@ void Game_Draw(void)
 	WallL_Draw();
 	WallB_Draw();
 	WallR_Draw();
+	WALLW_Draw();
+
 	//グリッドの描画処理
 	//Grid_Draw();
 

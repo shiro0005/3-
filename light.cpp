@@ -1,11 +1,12 @@
 
 #include "light.h"
 #include "myDirect3D.h"
+#include "player.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	NUM_LIGHT		(3)		// ライトの数
+#define	NUM_LIGHT		(4)		// ライトの数
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -100,6 +101,59 @@ void Light_Initialize(void)
 	pDevice->LightEnable(2, FALSE);
 
 
+	// D3DLIGHT9構造体を0でクリアする
+	ZeroMemory(&g_aLight[3], sizeof(D3DLIGHT9));
+
+	// ライト3のタイプの設定
+	g_aLight[3].Type = D3DLIGHT_SPOT;
+
+	//ライト3の位置の設定
+	g_aLight[3].Position = D3DXVECTOR3(500, 101, -600);
+
+	// ライト3の拡散光の設定
+	//g_aLight[3].Diffuse = D3DXCOLOR(0.15f, 0.15f, 0.15f, 1.0f);
+
+	//ライトの色
+	g_aLight[3].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+
+
+	g_aLight[3].Direction= D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+
+	////ライト3の範囲の設定
+	g_aLight[3].Range = 100.0f;
+
+	//0～1.0fまで設定　
+	g_aLight[3].Falloff = 1.0f;
+
+	//減衰率
+	g_aLight[3].Attenuation0 = 0.9f;
+	g_aLight[3].Attenuation1 = 0.0f;
+	g_aLight[3].Attenuation2 = 0.0f;
+
+	//内側と外側の角度
+	g_aLight[3].Theta = 1.1f;//内側
+	g_aLight[3].Phi = 2.21f;//外側
+
+
+
+	// ライト3の鏡面反射光の設定
+	//g_aLight[3].Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f);
+
+	// ライト3の方向の設定
+	/*vecDir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+	D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[3].Direction, &vecDir);*/
+
+	// ライト3をレンダリングパイプラインに設定
+	pDevice->SetLight(3, &g_aLight[3]);
+
+
+
+	// ライト3を有効に
+	pDevice->LightEnable(3, FALSE);
+
+
+
 	// ライティングモード有効
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);//ライティングするTRUEしないFALSE
 }
@@ -116,17 +170,34 @@ void Light_Finalize(void)
 //=============================================================================
 void Light_Update(void)
 {
+	PLAYER player = GetPlayer();
+	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+
+	g_aLight[3].Position = player.posModel;
+	g_aLight[3].Position.y = player.posModel.y+20.0f;
+	// ライト3をレンダリングパイプラインに設定
+	pDevice->SetLight(3, &g_aLight[3]);
+
 	cnt++;
 	if (cnt >= 120) {
 		LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
 		if (!flag) {
 			pDevice->LightEnable(0, FALSE);//ここが全体の光
 			pDevice->LightEnable(1, FALSE);//ここが全体の光
+
+			g_aLight[3].Position = player.posModel;
+			g_aLight[3].Position.y = player.posModel.y + 20.0f;
+			// ライト3をレンダリングパイプラインに設定
+			pDevice->SetLight(3, &g_aLight[3]);
+			pDevice->LightEnable(3, TRUE);//ここが全体の光
+
 			flag = true;
 		}
 		else {
 			pDevice->LightEnable(0, TRUE);//ここが全体の光
 			pDevice->LightEnable(1, TRUE);//ここが全体の光
+
+			pDevice->LightEnable(3, FALSE);//ここが全体の光
 			flag = false;
 		}
 		cnt = 0;

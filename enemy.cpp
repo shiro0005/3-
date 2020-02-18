@@ -145,7 +145,7 @@ void Enemy_Update(void)
 	//当たり判定用座標更新
 	for (int i = 0; i < MAX_ENEMY; i++)
 	{
-		if (deletecnt == 4) {
+		if (deletecnt >= 2) {
 			SPEED = 4;
 			PLAYER player = GetPlayer();
 
@@ -231,7 +231,7 @@ void Enemy_Update(void)
 
 
 		}
-		else if (deletecnt == 3) {
+		/*else if (deletecnt == 3) {
 			SPEED = 2;
 
 			if (g_Enemy[i].posModel.z > -100.0f || g_Enemy[i].posModel.x > 1000.0f) {
@@ -257,7 +257,7 @@ void Enemy_Update(void)
 
 
 
-		}
+		}*/
 		else if (g_Enemy[i].posModel.z < -1000.0f) {
 			g_Enemy[i].moveset = BACK;
 			if (deletecnt == 1) {

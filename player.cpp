@@ -431,6 +431,9 @@ void Player_Update(void)
 		player.moveModelold = player.moveModel;
 	}*/
 
+	if (GamePad_IsPress(0, BUTTON_R)) {
+		player.moveModel *= 1.15f;
+	}
 	
 
 	//if (Keyboard_IsPress(DIK_LSHIFT))
@@ -449,7 +452,7 @@ void Player_Update(void)
 	//		player.rotDestModel.y -= D3DX_PI * 2.0f;
 	//	}
 	//}
-	if (Keyboard_IsTrigger(DIK_SPACE)|| GamePad_IsPress(0, BUTTON_C))
+	if (Keyboard_IsTrigger(DIK_SPACE)|| GamePad_IsTrigger(0, BUTTON_C))
 	{//íeä€éÀèoèàóù
 		Bullet_Create(player.posModel.x,player.posModel.y, player.posModel.z, D3DXVECTOR2(player.moveModelold.x,player.moveModelold.z));
 	}

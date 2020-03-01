@@ -483,7 +483,6 @@ void Player_Update(void)
 	player.posModel.x += player.moveModel.x;
 	player.posModel.z += player.moveModel.z;
 
-	player.posModel.y = GetY(player.posModel.x, player.posModel.z);
 
 	if (player.posModel.x<5.0f || player.posModel.x>1095.0f || player.posModel.z > -5.0f || player.posModel.z < -1095.0f) {
 
@@ -502,6 +501,9 @@ void Player_Update(void)
 		}
 
 	}
+	player.posModel.y = GetY(player.posModel.x, player.posModel.z);
+
+
 	// ˆÚ“®—Ê‚ÉŠµ«‚ð‚©‚¯‚é
 	player.moveModel.x += (0.0f - player.moveModel.x) * RATE_MOVE_MODEL;
 	player.moveModel.z += (0.0f - player.moveModel.z) * RATE_MOVE_MODEL;

@@ -188,8 +188,13 @@ void Camera_Update(void)
 		DebugProc_Print("[ƒJƒƒ‰‚Ì‹——£   : (%f)]\n", g_camera.fDistance);
 		DebugProc_Print("\n");*/
 PLAYER pl = GetPlayer();
-g_camera.posV += pl.posModel-oldpos;
-g_camera.posR += pl.posModel-oldpos;
+D3DXVECTOR3 v = pl.posModel - oldpos;
+float len = D3DXVec3Length(&v);
+if (0.01f < len)
+{
+	g_camera.posV += pl.posModel - oldpos;
+	g_camera.posR += pl.posModel - oldpos;
+}
 oldpos = pl.posModel;
 }
 

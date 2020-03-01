@@ -21,6 +21,7 @@ static const TextureFile g_TextureFiles[] = {
     {"asset/texture/title.png",1280,740},
     {"asset/texture/result1.png",1280,740},
 	{ "asset/texture/number.tga", 320, 32 },
+    {"asset/texture/bust.jpg",480,640},
 };
 
 static const int TEXTURE_FILE_COUNT = sizeof(g_TextureFiles) / sizeof(g_TextureFiles[0]);

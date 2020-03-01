@@ -12,3 +12,5 @@ void Sprite_Draw(TextureIndex texture_index, float dx, float dy, int tx, int ty,
 void Sprite_Draw(TextureIndex texture_index, float dx, float dy, int tx, int ty, float r);
 
 void Sprite_Draw(TextureIndex texture_index, float dx, float dy, int tx, int ty, int tw, int th, float cx, float cy, float sx, float sy, float rotation);
+
+void Sprite_Draw(TextureIndex texture_index, float dx, float dy, int tx, int ty, int tw, int th, float cx, float cy, float sx, float sy, float rotation, D3DCOLOR g_color);

@@ -15,6 +15,7 @@
 #include "WALLW.h"
 #include "enemy.h"
 #include "fade.h"
+#include "bust.h"
 #include "collision.h"
 #include "scene.h"
 #include "result.h"
@@ -76,7 +77,7 @@ void Game_Initialize(void)
 	//’eŠÛ‚Ì‰Šú‰»
 	Bullet_Initialize();
 
-
+	Bust_Initialize();
 
 	//BGM‚ÌŠJn
 	//PlaySound(SOUND_LABEL_BGM001);
@@ -128,6 +129,7 @@ void Game_Finalize(void)
 	//’eŠÛ‚ÌI—¹ˆ—
 	Bullet_Finalize();
 
+	Bust_Finalize();
 }
 
 void Game_Update(void)
@@ -165,7 +167,7 @@ void Game_Update(void)
 	Bullet_Update();
 
 	//
-
+	Bust_Update();
 
 	//“–‚½‚è”»’è
 	Collision_Update();
@@ -255,6 +257,8 @@ void Game_Draw(void)
 
 	//’eŠÛ‚Ì•`‰æˆ—
 	Bullet_Draw();
+
+	Bust_Draw();
 }
 
 

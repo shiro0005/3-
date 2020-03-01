@@ -129,9 +129,49 @@ void Field_Update(void)
 		if (!flag) {
 			for (int z = 0; z < BLOCK_Y + 1; z++) {
 				for (int x = 0; x < BLOCK_X + 1; x++) {
-					if (x==2||x==3||x==6||x==7||x==10||x==11) {
+					if (x%11==0) {
 						//頂点座標の設定
 						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 100.0f, z*-10.0f);
+					}
+					else if (x % 11 == 1) {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f,70.0f, z*-10.0f);
+					}
+					else if (x % 11 == 2) {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 55.0f, z*-10.0f);
+					}
+					else if (x % 11 == 3) {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 45.0f, z*-10.0f);
+					}
+					else if (x % 11 == 4) {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 40.0f, z*-10.0f);
+					}
+					else if (x % 11 == 5) {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 37.0f, z*-10.0f);
+					}
+					else if (x % 11 == 6) {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 37.0f, z*-10.0f);
+					}
+					else if (x % 11 == 7) {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 40.0f, z*-10.0f);
+					}
+					else if (x % 11 == 8) {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 45.0f, z*-10.0f);
+					}
+					else if (x % 11 == 9) {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 55.0f, z*-10.0f);
+					}
+					else if (x % 11 == 10) {
+						//頂点座標の設定
+						pVtx[z * (BLOCK_X + 1) + x].pos = D3DXVECTOR3(x*10.0f, 70.0f, z*-10.0f);
 					}
 					else {
 						//頂点座標の設定
